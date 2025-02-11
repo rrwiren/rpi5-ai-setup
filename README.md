@@ -17,7 +17,7 @@ It includes configurations for:
 ### 1️⃣ Initial Raspberry Pi 5 Configuration
 - Updated system (`sudo apt update && sudo apt upgrade -y`)
 - Installed necessary tools (`git`, `tmux`, `screen`, `htop`, `curl`)
-- Created and configured user `riku` with **SSH key authentication**
+- Created and configured user `user` with **SSH key authentication**
 - Expanded filesystem & configured locales
 
 ### 2️⃣ Python & Virtual Environment
