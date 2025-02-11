@@ -9,7 +9,7 @@ from llama_cpp import Llama
 MODEL_PATH = "/home/riku/models/mistral-7b-v0.1.Q4_K_M.gguf"
 
 # Context sizes to test
-N_CTX_VALUES = [8192, 12288, 16384, 20480] # This seems to be optimum without crashing little rpi
+N_CTX_VALUES = [8192, 12288, 16384] # This seems to be optimum without crashing little rpi
 
 
 # Thresholds for safety (adjust as needed)
