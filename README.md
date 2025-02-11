@@ -2,6 +2,8 @@
 
 This repository documents the setup process for running Generative AI, RAG, and FAISS on a **Raspberry Pi 5 (16GB)**.
 
+Waiting for the AI hat...
+
 ## Overview
 
 This project focuses on deploying **local LLMs, vector search, and AI-enhanced workflows** on the Raspberry Pi 5.  
