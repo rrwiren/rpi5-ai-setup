@@ -1,0 +1,106 @@
+# Raspberry Pi 5 AI Setup Log
+
+## **Overview**
+This document contains the step-by-step setup process for configuring a **Raspberry Pi 5 (16GB)** for Generative AI, **FAISS-based vector search, RAG (Retrieval-Augmented Generation), and local LLMs (Large Language Models)** with interaction support for Google Drive.
+
+### **Progress Summary**
+- **Raspberry Pi OS installed and configured** ✅
+- **SSH access and user setup completed** ✅
+- **Python virtual environment created** ✅
+- **FAISS, LangChain, Llama.cpp installed** ✅
+- **Downloading Mistral-7B-v0.1-Q4_K_M (ETA: 13 min)** ⏳
+- **Next steps: Running inference & integrating RAG workflows** 🚀
+
+---
+
+## **📌 Setup Steps Completed**
+### **1️⃣ Installing Raspberry Pi OS**
+- Downloaded **Raspberry Pi Imager** on MacBook Pro
+- Flashed **Raspberry Pi OS 64-bit (Bookworm)** onto a microSD card
+- Configured **WiFi & SSH** from the Imager
+- Inserted SD card into **Raspberry Pi 5** and booted successfully
+
+### **2️⃣ Configuring Raspberry Pi 5**
+- **Connected via SSH** using:
+  ```bash
+  ssh riku@rpi5.local
+  ```
+- **Created user `riku` and added to sudo group:**
+  ```bash
+  sudo usermod -aG sudo riku
+  ```
+- **Generated SSH key-pair for authentication** ✅
+- **Expanded filesystem & configured locales (fi_FI, se_NO)** ✅
+
+### **3️⃣ Installing Essential Tools**
+```bash
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y git python3-pip python3-venv htop neofetch tmux curl screen
+```
+
+### **4️⃣ Setting Up Python Virtual Environment**
+```bash
+python3 -m venv ~/ai_env
+source ~/ai_env/bin/activate
+pip install --upgrade pip
+```
+
+### **5️⃣ Installing AI & RAG Libraries**
+```bash
+pip install faiss-cpu langchain transformers torch llama-cpp-python
+pip install google-api-python-client google-auth google-auth-oauthlib google-auth-httplib2
+pip install sentence-transformers
+```
+
+### **6️⃣ Setting Up FAISS for Vector Search**
+```python
+import faiss
+import numpy as np
+from sentence_transformers import SentenceTransformer
+
+# Load model
+model = SentenceTransformer("all-MiniLM-L6-v2")
+
+# Sample texts
+documents = [
+    "The Raspberry Pi 5 is a powerful single-board computer.",
+    "It supports AI workloads and has improved performance.",
+    "FAISS enables fast and efficient vector search.",
+    "Mistral-7B is strong for summarization.",
+    "Gemma-2B is optimized for chatbot tasks."
+]
+
+# Convert to embeddings
+embeddings = model.encode(documents)
+dimension = embeddings.shape[1]
+
+# Create FAISS index
+index = faiss.IndexFlatL2(dimension)
+index.add(np.array(embeddings, dtype="float32"))
+faiss.write_index(index, "faiss_rag_index.bin")
+```
+
+✅ **FAISS index successfully created & saved.**
+
+### **7️⃣ Downloading Mistral-7B-v0.1-Q4_K_M Model**
+```bash
+export HF_TOKEN="your_huggingface_token"
+mkdir -p ~/models
+wget --header="Authorization: Bearer $HF_TOKEN"      -O ~/models/mistral-7b-v0.1.Q4_K_M.gguf      "https://huggingface.co/TheBloke/Mistral-7B-v0.1-GGUF/resolve/main/mistral-7b-v0.1.Q4_K_M.gguf"
+```
+
+📥 **Download in progress (ETA: 13 min).**
+
+---
+
+## **🔜 Next Steps**
+1️⃣ **Run Mistral-7B using Llama.cpp for inference**  
+2️⃣ **Integrate Mistral-7B with FAISS for RAG (Retrieval-Augmented Generation)**  
+3️⃣ **Test chatbot with Gemma-2B (Q4_K_M) for conversational AI**  
+
+✅ **Ready to proceed once the model download is complete.** 🚀
+
+---
+
+## **📂 Backup & Continue Later**
+This document can be saved and reloaded anytime to continue the AI setup. Let me know when you're ready to proceed! 🎯
