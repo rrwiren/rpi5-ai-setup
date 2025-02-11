@@ -36,9 +36,8 @@ It includes configurations for:
 - Configured Llama.cpp for **optimized inference on Raspberry Pi 5**
 - Tested context size (`n_ctx`) scaling until **crash point identified at 30720**
 
-## Logs & Testing
-- **System logs** saved in [`rpi5_ai_setup_log.txt`](rpi5_ai_setup_log.txt)
-- **Model test results** saved in `mistral_ctx_test.log`
+## Logs & Testing 
+- **Model test results** saved in [`mistral_ctx_test.log`](mistral_ctx_test.log)
 
 ## Next Steps 🚀
 - Optimize performance for **longer context windows**
