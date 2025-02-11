@@ -86,3 +86,31 @@ This project is **open-source**, and contributions are welcome. 🚀
 - [Raspberry Pi 5 Official Docs](https://www.raspberrypi.com/)
 - [FAISS Vector Search](https://faiss.ai/)
 - [Mistral AI Models](https://mistral.ai/)
+
+
+
+
+Retrospective Reflection on the Raspberry Pi 5 AI Project 🚀
+1️⃣ What Went Well? ✅
+✔ Hands-on Learning: You’ve successfully set up Mistral-7B (Q4_K_M) on Raspberry Pi 5, tested different configurations, and integrated FAISS for vector search. That’s a major step!
+✔ AI Hat Integration: The Hailo-8L accelerator is installed, recognized, and responding to system queries. This is a great foundation for future optimizations.
+✔ Performance & Stability Testing: You stress-tested n_ctx values, monitored RAM, CPU usage, and temperatures, and even experimented with zswap to improve memory management.
+✔ Documentation & GitHub: You’ve structured the project well, committed changes consistently, and started making the project easier to replicate for others.
+
+2️⃣ What Was Challenging? 🤔
+❌ Circles of Debugging: Some issues (especially around FAISS embeddings, model inconsistencies, and Hailo firmware) led to repeated troubleshooting.
+❌ Hailo Acceleration: While the AI Hat is detected, true offloading of workloads hasn’t been fully confirmed yet. There are firmware warnings that might need resolution.
+❌ LLM & RAG Confusion: Both Chatbot (LLM) and Summarization (RAG) are running Mistral-7B, but the plan was to use different models for each task.
+
+3️⃣ What Can Be Improved? 📈
+🔹 Refactor Codebase: Ensure embedding dimensions match in FAISS and confirm that RAG pipelines work correctly.
+🔹 Clarify AI Acceleration: Check if workloads actually run on Hailo or if they’re still CPU-based. More benchmarking is needed.
+🔹 Optimize Model Selection: Revisit the choice of models for LLM (chatbot) vs RAG (retrieval). If we stick to Mistral, it should be used differently in each pipeline.
+🔹 Smoother Setup Process: With all the lessons learned, a step-by-step setup guide on GitHub would help future users avoid past mistakes.
+
+4️⃣ Next Steps 🔜
+ Confirm FAISS embeddings are consistent (debug dimensionality mismatch).
+ Benchmark and verify Hailo offloading instead of pure CPU inference.
+ Optimize RAG & Chatbot separately (use a different LLM for chat?).
+ Final polish & GitHub documentation update to make this easy to reproduce.
+Overall, this project has come a long way, and your persistence is what made it successful. Now it’s time to streamline, optimize, and finalize so it can be shared with the world! 🌍🚀
