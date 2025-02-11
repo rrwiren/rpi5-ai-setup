@@ -10,3 +10,21 @@ RAM Used: 0.92 GB
 Swap Used: 0.00 MB
 CPU Temp: temp=76.3'C
 ========================================
+CPU Mode - Tue Feb 11 22:41:09 2025
+Inference Time: 45.80 sec
+RAM Used: 0.92 GB
+Swap Used: 0.00 MB
+CPU Temp: temp=74.1'C
+========================================
+CPU Mode - Tue Feb 11 23:31:49 2025
+Inference Time: 45.75 sec
+RAM Used: 0.93 GB
+Swap Used: 0.00 MB
+CPU Temp: temp=74.1'C
+========================================
+HAILO Mode - Tue Feb 11 23:32:41 2025
+Inference Time: 46.40 sec
+RAM Used: 0.93 GB
+Swap Used: 0.00 MB
+CPU Temp: temp=81.8'C
+========================================

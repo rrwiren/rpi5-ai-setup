@@ -1,0 +1,9 @@
+🔄 Loading model from: /home/riku/models/mistral-7b-v0.1.Q4_K_M.gguf (Mode: cpu)
+
+✅ Benchmark Results
+🕒 Inference Time: 45.75 sec
+🔹 RAM Used: 0.93 GB
+🔹 Swap Used: 0.00 MB
+🔹 CPU Temp: temp=74.1'C
+
+📄 Benchmark results saved in benchmark_results.log
