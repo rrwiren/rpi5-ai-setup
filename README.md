@@ -45,8 +45,8 @@ It includes configurations for:
 - Fine-tune **memory management** on Raspberry Pi 5
 - Implement **vector search** with FAISS or ChromaDB
 - Explore **Google Workspace API** integration
+- (Waiting for the AI hat...)
 
 ---
 
-📌 *Contributions & improvements welcome!*# rpi5-ai-setup
-Raspberry Pi 5 setup for Generative AI, FAISS, RAG, and local LLMs.
+📌 *Contributions & improvements welcome!*
