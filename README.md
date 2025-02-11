@@ -90,7 +90,7 @@ This project is **open-source**, and contributions are welcome. 🚀
 
 
 
-Retrospective Reflection on the Raspberry Pi 5 AI Project 🚀
+## Retrospective Reflection on the Raspberry Pi 5 AI Project 🚀
 1️⃣ What Went Well? ✅
 ✔ Hands-on Learning: You’ve successfully set up Mistral-7B (Q4_K_M) on Raspberry Pi 5, tested different configurations, and integrated FAISS for vector search. That’s a major step!
 ✔ AI Hat Integration: The Hailo-8L accelerator is installed, recognized, and responding to system queries. This is a great foundation for future optimizations.
