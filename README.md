@@ -41,10 +41,52 @@ It includes configurations for:
 
 ## Next Steps 🚀
 - Optimize performance for **longer context windows**
-- Fine-tune **memory management** on Raspberry Pi 5
-- Implement **vector search** with FAISS or ChromaDB
-- Explore **Google Workspace API** integration
+- Fine-tune **memory managemen
+
+# Raspberry Pi 5 AI Setup
+
+## Overview
+This repository documents the setup of Raspberry Pi 5 for Generative AI, FAISS, RAG, and local LLMs.
+## Setup Steps
+1. **System Preparation**
+   - Installed Raspberry Pi OS (64-bit)
+   - Configured SSH and user `user`
+   - Expanded filesystem and updated system packages
+
+2. **Essential Tools Installed**
+   - `git`, `htop`, `tmux`, `screen`, `curl`
+   - Python environment (`python3-venv`, `pip`)
+   - FAISS, LangChain, and Transformers
+
+3. **Local LLMs Setup**
+   - Installed `llama.cpp`
+   - Downloaded **Mistral-7B (Q4_K_M)** for RAG/Summarization
+   - Configured **Gemma-2B (Q4_K_M)** for chatbot
+   - Enabled **FAISS vector search**
+
+## Logs & Testing
+- **System logs**: 
+- **Model test results**: `mistral_ctx_test.log`
+- 
+
+## Performance Optimization
+- **Configured Zswap**
+  - `zswap.enabled=1 zswap.compressor=lzo`
+  - Verified with `stored_pages` and `pool_total_size`
+- **Memory & Swap Management**
+  - Swappiness set to `100` for testing, will optimize further
+  - Swap space usage confirmed with `free -h`
+
+## Next Steps 🚀
+- Optimize performance for longer context windows
+- Fine-tune memory management on Raspberry Pi 5
+- Implement vector search with FAISS or ChromaDB
+- Prepare for **AI Hat integration**
+
+## Repository
+[GitHub Repo](https://github.com/rrwiren/rpi5-ai-setup)
 
 ---
 
-📌 *Contributions & improvements welcome!*
+📌 **Contributions & Feedback Welcome!**
+
