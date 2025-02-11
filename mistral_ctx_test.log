@@ -1,0 +1,25 @@
+🔍 Mistral Context Length Test Results
+
+✅ n_ctx=8192
+  Model Load Time: 0.78 sec
+  Query Eval Time: 9.32 sec
+  Memory Used: 1.02 GB
+  Response:  The Raspberry Pi 5 is a single-board computer that is designed...
+
+✅ n_ctx=12288
+  Model Load Time: 1.10 sec
+  Query Eval Time: 9.28 sec
+  Memory Used: 1.54 GB
+  Response:  The Raspberry Pi 5 is a single-board computer that is designed...
+
+✅ n_ctx=16384
+  Model Load Time: 1.43 sec
+  Query Eval Time: 9.44 sec
+  Memory Used: 2.01 GB
+  Response:  The Raspberry Pi 5 is a single-board computer that is designed...
+
+✅ n_ctx=20480
+  Model Load Time: 1.77 sec
+  Query Eval Time: 9.38 sec
+  Memory Used: 2.50 GB
+  Response:  The Raspberry Pi 5 is a single-board computer that is designed...
