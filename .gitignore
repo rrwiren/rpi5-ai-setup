@@ -2,3 +2,23 @@
 api-credentials.json
 client_secret.json
 api-project-970767241608-5f275b1e55da.json
+
+# Ignore downloaded documents
+downloaded_files/
+# Or if you want to keep some subfolders, specify them individually
+
+# Ignore FAISS index & metadata
+*.faiss
+chunk_metadata.pkl
+
+# Ignore logs
+*.log
+*.log.*
+
+# Python venv (if you keep it in the project folder)
+ai_env/
+.venv/
+
+# General OS files
+.DS_Store
+Thumbs.db
