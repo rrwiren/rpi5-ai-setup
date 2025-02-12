@@ -49,3 +49,5 @@ D, I = index.search(query_embedding, k=3)
 print("\n✅ FAISS Vector Search Results:")
 for rank, (dist, idx) in enumerate(zip(D[0], I[0])):
     print(f"{rank+1}. Match: '{documents[idx]}' (Distance: {dist:.4f})")
+
+# Updates to be applied...

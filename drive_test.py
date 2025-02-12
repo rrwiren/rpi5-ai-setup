@@ -3,7 +3,7 @@ from googleapiclient.discovery import build
 
 def main():
     # 1. Provide the path to your service account JSON key
-    SERVICE_ACCOUNT_FILE = "api-project-970767241608-5f275b1e55da.json"
+    SERVICE_ACCOUNT_FILE = "/home/riku/secure-keys/api-project-970767241608-5f275b1e55da.json"
 
     # 2. Scopes needed for Drive read/write. For read-only, you can also use:
     SCOPES = ["https://www.googleapis.com/auth/drive.readonly"]
@@ -36,3 +36,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# Updates to be applied...
