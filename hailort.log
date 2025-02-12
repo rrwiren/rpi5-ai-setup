@@ -306,3 +306,141 @@
 [2025-02-11 23:36:16.009] [5085] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_nms2yolov5m_wo_spp_60p/conv74_132 has 0 frames in his Queue on destruction
 [2025-02-11 23:36:16.009] [5085] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.006444 ms
 [2025-02-11 23:36:16.009] [5085] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.016944 ms
+[2025-02-12 10:23:13.885] [6053] [HailoRT] [info] [vdevice.cpp:523] [create] Creating vdevice with params: device_count: 1, scheduling_algorithm: NONE, multi_process_service: false
+[2025-02-12 10:23:13.897] [6053] [HailoRT] [info] [device.cpp:49] [Device] OS Version: Linux 6.6.74+rpt-rpi-2712 #1 SMP PREEMPT Debian 1:6.6.74-1+rpt1 (2025-01-27) aarch64
+[2025-02-12 10:23:13.899] [6053] [HailoRT] [info] [control.cpp:108] [control__parse_identify_results] firmware_version is: 4.20.0
+[2025-02-12 10:23:13.899] [6053] [HailoRT] [info] [vdevice.cpp:651] [create] VDevice Infos: 0000:04:00.0
+[2025-02-12 10:23:13.905] [6053] [HailoRT] [info] [internal_buffer_manager.cpp:204] [print_execution_results] Planned internal buffer memory: CMA memory 0, user memory 3689472. memory to edge layer usage factor is 0.7226958
+[2025-02-12 10:23:13.905] [6053] [HailoRT] [info] [internal_buffer_manager.cpp:212] [print_execution_results] Default Internal buffer planner executed successfully
+[2025-02-12 10:23:13.930] [6053] [HailoRT] [info] [device_internal.cpp:57] [configure] Configuring HEF took 31.328011 milliseconds
+[2025-02-12 10:23:13.931] [6053] [HailoRT] [info] [vdevice.cpp:749] [configure] Configuring HEF on VDevice took 31.689564 milliseconds
+[2025-02-12 10:23:13.932] [6053] [HailoRT] [info] [control.cpp:108] [control__parse_identify_results] firmware_version is: 4.20.0
+[2025-02-12 10:23:13.933] [6053] [HailoRT] [info] [control.cpp:108] [control__parse_identify_results] firmware_version is: 4.20.0
+[2025-02-12 10:23:13.934] [6053] [HailoRT] [info] [core_op.cpp:156] [activate] Activating yolov5m_wo_spp_60p took 0.647903 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2025-02-12 10:23:13.934] [6053] [HailoRT] [info] [core_op.cpp:156] [activate] Activating yolov5m_wo_spp_60p took 0.661495 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2025-02-12 10:23:13.952] [6053] [HailoRT] [info] [control.cpp:108] [control__parse_identify_results] firmware_version is: 4.20.0
+[2025-02-12 10:23:13.953] [6053] [HailoRT] [info] [control.cpp:108] [control__parse_identify_results] firmware_version is: 4.20.0
+[2025-02-12 10:23:28.954] [6071] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0000:04:00.0)
+[2025-02-12 10:23:28.954] [6073] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0000:04:00.0)
+[2025-02-12 10:23:28.954] [6074] [HailoRT] [info] [vdevice_native_stream.cpp:142] [write_impl] Failed write to stream yolov5m_wo_spp_60p/input_layer1 (device: 0000:04:00.0) with status=HAILO_STREAM_ABORT(63)
+[2025-02-12 10:23:28.954] [6072] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0000:04:00.0)
+[2025-02-12 10:23:28.955] [6053] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.006556 ms
+[2025-02-12 10:23:28.955] [6053] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.025111 ms
+[2025-02-12 10:23:29.201] [6053] [HailoRT] [info] [vdevice.cpp:523] [create] Creating vdevice with params: device_count: 1, scheduling_algorithm: NONE, multi_process_service: false
+[2025-02-12 10:23:29.213] [6053] [HailoRT] [info] [device.cpp:49] [Device] OS Version: Linux 6.6.74+rpt-rpi-2712 #1 SMP PREEMPT Debian 1:6.6.74-1+rpt1 (2025-01-27) aarch64
+[2025-02-12 10:23:29.215] [6053] [HailoRT] [info] [control.cpp:108] [control__parse_identify_results] firmware_version is: 4.20.0
+[2025-02-12 10:23:29.215] [6053] [HailoRT] [info] [vdevice.cpp:651] [create] VDevice Infos: 0000:04:00.0
+[2025-02-12 10:23:29.221] [6053] [HailoRT] [info] [internal_buffer_manager.cpp:204] [print_execution_results] Planned internal buffer memory: CMA memory 0, user memory 3689472. memory to edge layer usage factor is 0.7226958
+[2025-02-12 10:23:29.221] [6053] [HailoRT] [info] [internal_buffer_manager.cpp:212] [print_execution_results] Default Internal buffer planner executed successfully
+[2025-02-12 10:23:29.246] [6053] [HailoRT] [info] [device_internal.cpp:57] [configure] Configuring HEF took 31.234438 milliseconds
+[2025-02-12 10:23:29.246] [6053] [HailoRT] [info] [vdevice.cpp:749] [configure] Configuring HEF on VDevice took 31.582528 milliseconds
+[2025-02-12 10:23:29.248] [6053] [HailoRT] [info] [control.cpp:108] [control__parse_identify_results] firmware_version is: 4.20.0
+[2025-02-12 10:23:29.249] [6053] [HailoRT] [info] [control.cpp:108] [control__parse_identify_results] firmware_version is: 4.20.0
+[2025-02-12 10:23:29.250] [6053] [HailoRT] [info] [core_op.cpp:156] [activate] Activating yolov5m_wo_spp_60p took 0.616218 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2025-02-12 10:23:29.250] [6053] [HailoRT] [info] [core_op.cpp:156] [activate] Activating yolov5m_wo_spp_60p took 0.62733 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2025-02-12 10:23:29.268] [6053] [HailoRT] [info] [control.cpp:108] [control__parse_identify_results] firmware_version is: 4.20.0
+[2025-02-12 10:23:29.269] [6053] [HailoRT] [info] [control.cpp:108] [control__parse_identify_results] firmware_version is: 4.20.0
+[2025-02-12 10:23:29.269] [6053] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl3yolov5m_wo_spp_60p/input_layer1 | hw_frame_size: 1228800)
+[2025-02-12 10:23:29.269] [6053] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl3yolov5m_wo_spp_60p/input_layer1 | timeout: 10s)
+[2025-02-12 10:23:29.269] [6053] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl3yolov5m_wo_spp_60p/input_layer1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2025-02-12 10:23:29.269] [6053] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating yolov5m_wo_spp_60p/input_layer1...
+[2025-02-12 10:23:29.269] [6053] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'yolov5m_wo_spp_60p/input_layer1': (PreInferEl3yolov5m_wo_spp_60p/input_layer1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl3yolov5m_wo_spp_60p/input_layer1 | timeout: 10s) >> (HwWriteEl3yolov5m_wo_spp_60p/input_layer1 | hw_frame_size: 1228800) >> HW
+[2025-02-12 10:23:29.269] [6053] [HailoRT] [info] [multi_io_elements.cpp:135] [create] Created (NmsPPMuxEl0YOLOv5-Post-Process | Op YOLOV5, Name: YOLOv5-Post-Process, Score threshold: 0.200, IoU threshold: 0.60, Classes: 80, Cross classes: false, NMS results order: BY_CLASS, Max bboxes per class: 80, Image height: 640, Image width: 640)
+[2025-02-12 10:23:29.269] [6053] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl2yolov5m_wo_spp_60p/conv74_132 | hw_frame_size: 1632000)
+[2025-02-12 10:23:29.270] [6053] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_nms2yolov5m_wo_spp_60p/conv74_132 | timeout: 10s)
+[2025-02-12 10:23:29.270] [6053] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0yolov5m_wo_spp_60p/conv84_132 | hw_frame_size: 408000)
+[2025-02-12 10:23:29.270] [6053] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_nms0yolov5m_wo_spp_60p/conv84_132 | timeout: 10s)
+[2025-02-12 10:23:29.270] [6053] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl1yolov5m_wo_spp_60p/conv93_132 | hw_frame_size: 122400)
+[2025-02-12 10:23:29.270] [6053] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_nms1yolov5m_wo_spp_60p/conv93_132 | timeout: 10s)
+[2025-02-12 10:23:29.270] [6053] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBufQEl_post_infer0yolov5m_wo_spp_60p/yolov5_nms_postprocess | timeout: 10s)
+[2025-02-12 10:23:29.270] [6053] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating yolov5m_wo_spp_60p/yolov5_nms_postprocess...
+[2025-02-12 10:23:29.270] [6053] [HailoRT] [info] [vstream_builder.cpp:622] [create_output_post_process_nms] Output pipeline 'yolov5m_wo_spp_60p/yolov5_nms_postprocess': HW >> (HwReadEl2yolov5m_wo_spp_60p/conv74_132 | hw_frame_size: 1632000) >> (PullQEl_nms2yolov5m_wo_spp_60p/conv74_132) >> (HwReadEl0yolov5m_wo_spp_60p/conv84_132 | hw_frame_size: 408000) >> (PullQEl_nms0yolov5m_wo_spp_60p/conv84_132) >> (HwReadEl1yolov5m_wo_spp_60p/conv93_132 | hw_frame_size: 122400) >> (PullQEl_nms1yolov5m_wo_spp_60p/conv93_132) >> (NmsPPMuxEl0YOLOv5-Post-Process | Op YOLOV5, Name: YOLOv5-Post-Process, Score threshold: 0.200, IoU threshold: 0.60, Classes: 80, Cross classes: false, NMS results order: BY_CLASS, Max bboxes per class: 80, Image height: 640, Image width: 640) >> (UserBufQEl_post_infer0yolov5m_wo_spp_60p/yolov5_nms_postprocess | timeout: 10s)
+[2025-02-12 10:23:44.270] [6089] [HailoRT] [info] [vdevice_native_stream.cpp:142] [write_impl] Failed write to stream yolov5m_wo_spp_60p/input_layer1 (device: 0000:04:00.0) with status=HAILO_STREAM_ABORT(63)
+[2025-02-12 10:23:44.270] [6091] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0000:04:00.0)
+[2025-02-12 10:23:44.270] [6091] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2025-02-12 10:23:44.270] [6089] [HailoRT] [info] [edge_elements.cpp:87] [run_push] Failed to send on input stream InputStream(index=3, name=yolov5m_wo_spp_60p/input_layer1) because stream was aborted
+[2025-02-12 10:23:44.270] [6091] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_nms0yolov5m_wo_spp_60p/conv84_132 was aborted!
+[2025-02-12 10:23:44.270] [6089] [HailoRT] [info] [queue_elements.cpp:401] [run_in_thread] run_push of PushQEl3yolov5m_wo_spp_60p/input_layer1 was aborted!
+[2025-02-12 10:23:44.270] [6092] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0000:04:00.0)
+[2025-02-12 10:23:44.270] [6092] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2025-02-12 10:23:44.270] [6090] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0000:04:00.0)
+[2025-02-12 10:23:44.270] [6092] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_nms1yolov5m_wo_spp_60p/conv93_132 was aborted!
+[2025-02-12 10:23:44.270] [6090] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2025-02-12 10:23:44.270] [6090] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_nms2yolov5m_wo_spp_60p/conv74_132 was aborted!
+[2025-02-12 10:23:44.270] [6096] [HailoRT] [info] [queue_elements.cpp:706] [run_pull] Shutdown event was signaled in dequeue of queue element PullQEl_nms2yolov5m_wo_spp_60p/conv74_132!
+[2025-02-12 10:23:44.270] [6096] [HailoRT] [info] [vstream.cpp:1138] [read] Receiving to VStream was shutdown!
+[2025-02-12 10:23:44.272] [6097] [HailoRT] [info] [queue_elements.cpp:319] [run_push] run_push of PushQEl3yolov5m_wo_spp_60p/input_layer1 was aborted!
+[2025-02-12 10:23:44.272] [6097] [HailoRT] [info] [filter_elements.cpp:35] [run_push] run_push of PreInferEl3yolov5m_wo_spp_60p/input_layer1 was aborted!
+[2025-02-12 10:23:44.272] [6097] [HailoRT] [info] [vstream.cpp:778] [write] Sending to VStream was aborted!
+[2025-02-12 10:23:44.276] [6053] [HailoRT] [info] [queue_elements.cpp:360] [execute_deactivate] enqueue() in element PushQEl3yolov5m_wo_spp_60p/input_layer1 was aborted, got status = HAILO_SHUTDOWN_EVENT_SIGNALED(57)
+[2025-02-12 10:23:44.276] [6089] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PushQEl3yolov5m_wo_spp_60p/input_layer1 is not running anymore, exiting..
+[2025-02-12 10:23:44.277] [6053] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl3yolov5m_wo_spp_60p/input_layer1 has 1 frames in his Queue on destruction
+[2025-02-12 10:23:44.277] [6093] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBufQEl_post_infer0yolov5m_wo_spp_60p/yolov5_nms_postprocess is not running anymore, exiting..
+[2025-02-12 10:23:44.277] [6053] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBufQEl_post_infer0yolov5m_wo_spp_60p/yolov5_nms_postprocess has 0 frames in his Queue on destruction
+[2025-02-12 10:23:44.277] [6092] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_nms1yolov5m_wo_spp_60p/conv93_132 is not running anymore, exiting..
+[2025-02-12 10:23:44.277] [6053] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_nms1yolov5m_wo_spp_60p/conv93_132 has 0 frames in his Queue on destruction
+[2025-02-12 10:23:44.277] [6091] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_nms0yolov5m_wo_spp_60p/conv84_132 is not running anymore, exiting..
+[2025-02-12 10:23:44.277] [6053] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_nms0yolov5m_wo_spp_60p/conv84_132 has 0 frames in his Queue on destruction
+[2025-02-12 10:23:44.277] [6090] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_nms2yolov5m_wo_spp_60p/conv74_132 is not running anymore, exiting..
+[2025-02-12 10:23:44.277] [6053] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_nms2yolov5m_wo_spp_60p/conv74_132 has 0 frames in his Queue on destruction
+[2025-02-12 10:23:44.277] [6053] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.005833 ms
+[2025-02-12 10:23:44.277] [6053] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.016945 ms
+[2025-02-12 10:23:44.518] [6053] [HailoRT] [info] [vdevice.cpp:523] [create] Creating vdevice with params: device_count: 1, scheduling_algorithm: NONE, multi_process_service: false
+[2025-02-12 10:23:44.529] [6053] [HailoRT] [info] [device.cpp:49] [Device] OS Version: Linux 6.6.74+rpt-rpi-2712 #1 SMP PREEMPT Debian 1:6.6.74-1+rpt1 (2025-01-27) aarch64
+[2025-02-12 10:23:44.531] [6053] [HailoRT] [info] [control.cpp:108] [control__parse_identify_results] firmware_version is: 4.20.0
+[2025-02-12 10:23:44.531] [6053] [HailoRT] [info] [vdevice.cpp:651] [create] VDevice Infos: 0000:04:00.0
+[2025-02-12 10:23:44.537] [6053] [HailoRT] [info] [internal_buffer_manager.cpp:204] [print_execution_results] Planned internal buffer memory: CMA memory 0, user memory 3689472. memory to edge layer usage factor is 0.7226958
+[2025-02-12 10:23:44.537] [6053] [HailoRT] [info] [internal_buffer_manager.cpp:212] [print_execution_results] Default Internal buffer planner executed successfully
+[2025-02-12 10:23:44.562] [6053] [HailoRT] [info] [device_internal.cpp:57] [configure] Configuring HEF took 31.365882 milliseconds
+[2025-02-12 10:23:44.563] [6053] [HailoRT] [info] [vdevice.cpp:749] [configure] Configuring HEF on VDevice took 31.720158 milliseconds
+[2025-02-12 10:23:44.564] [6053] [HailoRT] [info] [control.cpp:108] [control__parse_identify_results] firmware_version is: 4.20.0
+[2025-02-12 10:23:44.565] [6053] [HailoRT] [info] [control.cpp:108] [control__parse_identify_results] firmware_version is: 4.20.0
+[2025-02-12 10:23:44.566] [6053] [HailoRT] [info] [core_op.cpp:156] [activate] Activating yolov5m_wo_spp_60p took 0.6322 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2025-02-12 10:23:44.566] [6053] [HailoRT] [info] [core_op.cpp:156] [activate] Activating yolov5m_wo_spp_60p took 0.643552 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2025-02-12 10:23:44.584] [6053] [HailoRT] [info] [control.cpp:108] [control__parse_identify_results] firmware_version is: 4.20.0
+[2025-02-12 10:23:44.585] [6053] [HailoRT] [info] [control.cpp:108] [control__parse_identify_results] firmware_version is: 4.20.0
+[2025-02-12 10:23:44.585] [6053] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl3yolov5m_wo_spp_60p/input_layer1 | hw_frame_size: 1228800)
+[2025-02-12 10:23:44.585] [6053] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl3yolov5m_wo_spp_60p/input_layer1 | timeout: 10s)
+[2025-02-12 10:23:44.585] [6053] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl3yolov5m_wo_spp_60p/input_layer1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2025-02-12 10:23:44.585] [6053] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating yolov5m_wo_spp_60p/input_layer1...
+[2025-02-12 10:23:44.585] [6053] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'yolov5m_wo_spp_60p/input_layer1': (PreInferEl3yolov5m_wo_spp_60p/input_layer1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl3yolov5m_wo_spp_60p/input_layer1 | timeout: 10s) >> (HwWriteEl3yolov5m_wo_spp_60p/input_layer1 | hw_frame_size: 1228800) >> HW
+[2025-02-12 10:23:44.585] [6053] [HailoRT] [info] [multi_io_elements.cpp:135] [create] Created (NmsPPMuxEl0YOLOv5-Post-Process | Op YOLOV5, Name: YOLOv5-Post-Process, Score threshold: 0.200, IoU threshold: 0.60, Classes: 80, Cross classes: false, NMS results order: BY_CLASS, Max bboxes per class: 80, Image height: 640, Image width: 640)
+[2025-02-12 10:23:44.585] [6053] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl2yolov5m_wo_spp_60p/conv74_132 | hw_frame_size: 1632000)
+[2025-02-12 10:23:44.586] [6053] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_nms2yolov5m_wo_spp_60p/conv74_132 | timeout: 10s)
+[2025-02-12 10:23:44.586] [6053] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0yolov5m_wo_spp_60p/conv84_132 | hw_frame_size: 408000)
+[2025-02-12 10:23:44.586] [6053] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_nms0yolov5m_wo_spp_60p/conv84_132 | timeout: 10s)
+[2025-02-12 10:23:44.586] [6053] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl1yolov5m_wo_spp_60p/conv93_132 | hw_frame_size: 122400)
+[2025-02-12 10:23:44.586] [6053] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_nms1yolov5m_wo_spp_60p/conv93_132 | timeout: 10s)
+[2025-02-12 10:23:44.586] [6053] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBufQEl_post_infer0yolov5m_wo_spp_60p/yolov5_nms_postprocess | timeout: 10s)
+[2025-02-12 10:23:44.586] [6053] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating yolov5m_wo_spp_60p/yolov5_nms_postprocess...
+[2025-02-12 10:23:44.586] [6053] [HailoRT] [info] [vstream_builder.cpp:622] [create_output_post_process_nms] Output pipeline 'yolov5m_wo_spp_60p/yolov5_nms_postprocess': HW >> (HwReadEl2yolov5m_wo_spp_60p/conv74_132 | hw_frame_size: 1632000) >> (PullQEl_nms2yolov5m_wo_spp_60p/conv74_132) >> (HwReadEl0yolov5m_wo_spp_60p/conv84_132 | hw_frame_size: 408000) >> (PullQEl_nms0yolov5m_wo_spp_60p/conv84_132) >> (HwReadEl1yolov5m_wo_spp_60p/conv93_132 | hw_frame_size: 122400) >> (PullQEl_nms1yolov5m_wo_spp_60p/conv93_132) >> (NmsPPMuxEl0YOLOv5-Post-Process | Op YOLOV5, Name: YOLOv5-Post-Process, Score threshold: 0.200, IoU threshold: 0.60, Classes: 80, Cross classes: false, NMS results order: BY_CLASS, Max bboxes per class: 80, Image height: 640, Image width: 640) >> (UserBufQEl_post_infer0yolov5m_wo_spp_60p/yolov5_nms_postprocess | timeout: 10s)
+[2025-02-12 10:23:59.586] [6117] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0000:04:00.0)
+[2025-02-12 10:23:59.586] [6117] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2025-02-12 10:23:59.586] [6118] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0000:04:00.0)
+[2025-02-12 10:23:59.586] [6118] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2025-02-12 10:23:59.586] [6117] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_nms0yolov5m_wo_spp_60p/conv84_132 was aborted!
+[2025-02-12 10:23:59.586] [6118] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_nms1yolov5m_wo_spp_60p/conv93_132 was aborted!
+[2025-02-12 10:23:59.586] [6116] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0000:04:00.0)
+[2025-02-12 10:23:59.586] [6116] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2025-02-12 10:23:59.586] [6116] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_nms2yolov5m_wo_spp_60p/conv74_132 was aborted!
+[2025-02-12 10:23:59.586] [6122] [HailoRT] [info] [queue_elements.cpp:706] [run_pull] Shutdown event was signaled in dequeue of queue element PullQEl_nms2yolov5m_wo_spp_60p/conv74_132!
+[2025-02-12 10:23:59.586] [6122] [HailoRT] [info] [vstream.cpp:1138] [read] Receiving to VStream was shutdown!
+[2025-02-12 10:23:59.588] [6115] [HailoRT] [info] [vdevice_native_stream.cpp:142] [write_impl] Failed write to stream yolov5m_wo_spp_60p/input_layer1 (device: 0000:04:00.0) with status=HAILO_STREAM_ABORT(63)
+[2025-02-12 10:23:59.588] [6115] [HailoRT] [info] [edge_elements.cpp:87] [run_push] Failed to send on input stream InputStream(index=3, name=yolov5m_wo_spp_60p/input_layer1) because stream was aborted
+[2025-02-12 10:23:59.588] [6115] [HailoRT] [info] [queue_elements.cpp:401] [run_in_thread] run_push of PushQEl3yolov5m_wo_spp_60p/input_layer1 was aborted!
+[2025-02-12 10:23:59.590] [6123] [HailoRT] [info] [queue_elements.cpp:319] [run_push] run_push of PushQEl3yolov5m_wo_spp_60p/input_layer1 was aborted!
+[2025-02-12 10:23:59.590] [6123] [HailoRT] [info] [filter_elements.cpp:35] [run_push] run_push of PreInferEl3yolov5m_wo_spp_60p/input_layer1 was aborted!
+[2025-02-12 10:23:59.590] [6123] [HailoRT] [info] [vstream.cpp:778] [write] Sending to VStream was aborted!
+[2025-02-12 10:23:59.592] [6053] [HailoRT] [info] [queue_elements.cpp:360] [execute_deactivate] enqueue() in element PushQEl3yolov5m_wo_spp_60p/input_layer1 was aborted, got status = HAILO_SHUTDOWN_EVENT_SIGNALED(57)
+[2025-02-12 10:23:59.592] [6115] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PushQEl3yolov5m_wo_spp_60p/input_layer1 is not running anymore, exiting..
+[2025-02-12 10:23:59.592] [6053] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl3yolov5m_wo_spp_60p/input_layer1 has 0 frames in his Queue on destruction
+[2025-02-12 10:23:59.592] [6119] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBufQEl_post_infer0yolov5m_wo_spp_60p/yolov5_nms_postprocess is not running anymore, exiting..
+[2025-02-12 10:23:59.592] [6053] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBufQEl_post_infer0yolov5m_wo_spp_60p/yolov5_nms_postprocess has 0 frames in his Queue on destruction
+[2025-02-12 10:23:59.592] [6118] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_nms1yolov5m_wo_spp_60p/conv93_132 is not running anymore, exiting..
+[2025-02-12 10:23:59.593] [6053] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_nms1yolov5m_wo_spp_60p/conv93_132 has 0 frames in his Queue on destruction
+[2025-02-12 10:23:59.593] [6117] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_nms0yolov5m_wo_spp_60p/conv84_132 is not running anymore, exiting..
+[2025-02-12 10:23:59.593] [6053] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_nms0yolov5m_wo_spp_60p/conv84_132 has 0 frames in his Queue on destruction
+[2025-02-12 10:23:59.593] [6116] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_nms2yolov5m_wo_spp_60p/conv74_132 is not running anymore, exiting..
+[2025-02-12 10:23:59.593] [6053] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_nms2yolov5m_wo_spp_60p/conv74_132 has 0 frames in his Queue on destruction
+[2025-02-12 10:23:59.593] [6053] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.005871 ms
+[2025-02-12 10:23:59.593] [6053] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.017074 ms
