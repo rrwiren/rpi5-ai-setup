@@ -72,9 +72,7 @@ More features planned (UI front-end, partial Hailo offload, advanced chunking, e
 
 ### 3.2 Pipeline Diagram
 
-![Pipeline Diagram](images/pipeline_diagram.png "RAG Pipeline")
-
-**Note:** You'll need to save your pipeline diagram image as `pipeline_diagram.png` in the `images/` directory of your repository. This is the standard way to include images in a GitHub README.
+![Pipeline Diagram](images/vit-diagram.png "RAG Pipeline")
 
 ---
 
