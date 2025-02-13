@@ -203,7 +203,7 @@ Below are example performance tables for LLM inference and FAISS:
 | CPU         | 5.79 s        | \~0.92 GB | \~75.7°C  |
 | Hailo       | 5.85 s        | \~0.92 GB | \~76.3°C  |
 
-(Times are approximate for a certain test. Actual values may differ on Pi 5 conditions.)
+(Times are approximate for a certain test. Actual values may differ on Pi 5 conditions. The model used not optimal for AI Hat...)
 
 **Vector Search (FAISS):**
 
@@ -212,7 +212,7 @@ Below are example performance tables for LLM inference and FAISS:
 | Small Corpus  | 3.2 s         | 0.5 ms/query     |
 | Large Corpus  | TBD           | TBD              |
 
-(Again, example numbers showing the difference in scale. You can expand or replace with actual logs.)
+(Again, example numbers showing the difference in scale. You can check actual logs as we progress.)
 
 -----
 
