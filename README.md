@@ -67,7 +67,7 @@ The pipeline chunks documents, creates embeddings, stores them in FAISS, and the
 
 ### 3.1 Pi 5 Photo
 
-![Raspberry Pi 5 Photo](images/rpi5_photo.jpg "Raspberry Pi 5 with AI hat")
+![Raspberry Pi 5 Photo with AI hat](images/rpi5_photo.jpg "Raspberry Pi 5 with AI hat")
 
 ### 3.2 Pipeline Diagram
 
@@ -190,18 +190,21 @@ Key performance metrics to track:
 
 ---
 
-## 8. Future / "Pro" Suggestions
+## 8. Future Suggestions
 
 1.  **Document Preprocessing:** Implement OCR for scanned PDFs and semantic paragraph merging.
 2.  **Alternative Vector Databases:** Explore Milvus, Weaviate, or Chroma for advanced features.
 3.  **Web UI:** Develop a simple web interface using FastAPI or Flask.
-4.  **Monitoring:** Implement logging and monitoring of resource usage (CPU, memory, temperature) using tools like Grafana.
+4.  **Monitoring:** Implement logging and monitoring of resource usage (CPU, memory, temperature).
 5.  **Batch Embedding:** Process multiple chunks simultaneously during index building.
 6.  **Hybrid Search:** Combine vector search with keyword-based filtering.
 7.  **Fine-Tuning:** Explore fine-tuning Mistral 7B or using LoRA for domain-specific adaptation.
 8.  **Hailo-8L Offload:** Investigate offloading computation to a Hailo-8L accelerator (experimental).
 9.  **Automatic Summarization:** Summarize large chunks before feeding them to Mistral 7B.
 10. **Multi-turn Chat:** Implement basic conversational context.
+ 
+<a name="next_steps"></a>
+- see also [next_steps.md](next steps)
 
 ---
 
@@ -255,5 +258,5 @@ Open PRs or Issues to:
 ---
 
 ## 11. Next Steps
-<a name="next-steps"></a>
+<a name="next_steps"></a>
 See the [next_steps.md](next_steps.md) file for a draft roadmap of future development considerations.
