@@ -1,13 +1,15 @@
-# Raspberry Pi 5 AI Setup (Hybrid RAG) – Project Journal 🚀
+# Raspberry Pi 5 AI (Hybrid RAG) – Project Journal 🚀
 
-This `README.md` documents a **Retrieval-Augmented Generation (RAG)** pipeline built on a **Raspberry Pi 5** (16GB model). The project uses:
+This `README.md` documents a **Retrieval-Augmented Generation (RAG)** pipeline built on a **Raspberry Pi 5 16GB**. 
+
+The project uses:
 
 -   **Sentence Transformers** (specifically `all-MiniLM-L6-v2`) for efficient text embeddings.
 -   **Mistral 7B (Q4_K_M)** for local text generation.
 -   **FAISS** for fast vector similarity search.
 -   **Google Drive** as a document source (PDFs and TXT files).
 -   And, when necessary, the "**fresh Finnish air**" method for rapid CPU cooling! (While waiting for PoE hat with cooling.
--   Also installed a **BM2L-AIS-H8L** AI hat, however only minimal testing so far...
+-   Also installed a **BM2L-AIS-H8L** Hailo AI hat, however only minimal testing so far...
 
 This file serves as a project journal, tracking progress, design decisions, and future plans.
 
@@ -65,11 +67,11 @@ The pipeline chunks documents, creates embeddings, stores them in FAISS, and the
 
 ### 3.1 Pi 5 Photo
 
-![Raspberry Pi 5 Photo](images/rpi5_photo.jpg "Raspberry Pi 5")
+![Raspberry Pi 5 Photo](images/rpi5_photo.jpg "Raspberry Pi 5 with AI hat")
 
 ### 3.2 Pipeline Diagram
 
-![Pipeline Diagram](images/pipeline_diagram.png "RAG Pipeline")
+![Pipeline Diagram](images/vit-diagram.jpg "RAG Pipeline")
 
 ---
 
@@ -177,6 +179,8 @@ Key performance metrics to track:
 | CPU    | 45.79 s       | ~0.92 GB | ~75.7°C  |
 | Hailo  | 45.85 s       | ~0.92 GB | ~76.3°C  |
 
+- The model used here was not optimal for the AI hat...
+
 **FAISS Vector Search:**
 
 | Dataset       | Indexing Time | Query Speed    |
@@ -203,7 +207,7 @@ Key performance metrics to track:
 
 ## 9. Credits & Contact
 
-© 2025 – Built & tested by Richard Wirén.
+© 2025 – Built & tested by RW. (with some AI help...)
 
 **Contributing**
 
@@ -252,4 +256,4 @@ Open PRs or Issues to:
 
 ## 11. Next Steps
 <a name="next-steps"></a>
-See the [NEXT_STEPS.md](next_steps.md) file for a detailed roadmap of future development.
+See the [next_steps.md](next_steps.md) file for a draft roadmap of future development considerations.
