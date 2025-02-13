@@ -65,11 +65,9 @@ Future versions (see [Section 8](#future--pro-version-suggestions)) will incorpo
 
 ### 3.1 Photo
 
-Here's a **close-up photo** of the Raspberry Pi 5 in action (example):
+Here's a **close-up photo** of the Raspberry Pi 5 with Hailo AI hat:
 
 ![Raspberry Pi 5 Photo](images/rpi5_photo.jpg "Raspberry Pi 5")
-
-*(Place the actual image `rpi5_photo.jpg` in an `images/` folder in your repo.)*
 
 ### 3.2 Minimal Pipeline Diagram
 
