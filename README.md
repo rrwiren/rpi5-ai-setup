@@ -8,7 +8,7 @@ The project uses:
 -   **Mistral 7B (Q4_K_M)** for local text generation.
 -   **FAISS** for fast vector similarity search.
 -   **Google Drive** as a document source (PDFs and TXT files).
--   And, when necessary, the "**fresh Finnish air**" method for rapid CPU cooling! (While waiting for PoE hat with cooling.
+-   And, when necessary, the "**fresh Finnish air**" method for rapid CPU cooling! 
 -   Also installed a **BM2L-AIS-H8L** Hailo AI hat, however only minimal testing so far...
 
 This file serves as a project journal, tracking progress, design decisions, and future plans.
