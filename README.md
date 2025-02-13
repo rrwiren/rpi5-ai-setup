@@ -1,6 +1,6 @@
-# Raspberry Pi 5 AI Setup (Hybrid RAG) – Project Journal 🚀
+# Raspberry Pi 5 AI (Hybrid RAG) – Project Journal 🚀
 
-This single-file **journal** tracks our **Retrieval-Augmented Generation (RAG)** pipeline on a **Raspberry Pi 5** (8GB, with a future 16GB model). We use:
+This single-file **journal** tracks our **Retrieval-Augmented Generation (RAG)** pipeline on a **Raspberry Pi 5** (16GB model, also Hailo AI hat). We use:
 
 -   **Sentence Transformers** (e.g., `all-MiniLM-L6-v2`) for embeddings
 -   **Mistral 7B (Q4_K_M)** for local text generation
@@ -61,6 +61,8 @@ Docs are chunked, embedded, stored in FAISS. At query time, we embed the user qu
 -   Memory constraints if chunking is large
 
 More features planned (UI front-end, partial Hailo offload, advanced chunking, etc.).
+
+![Next steps...](next_steps.md "Nex steps...")
 
 ---
 
