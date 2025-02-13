@@ -24,7 +24,7 @@ This file serves as a project journal, tracking progress, design decisions, and 
 5.  [Setup & Requirements](#setup)
 6.  [Chunking & Tuning](#chunking)
 7.  [Testing & Benchmarking](#testing)
-8.  [Future / "Pro" Suggestions](#pro-suggestions)
+8.  [Future suggestions](#pro-suggestions)
 9.  [Credits & Contact](#credits)
 10. [Example Usage](#usage)
 11. [Next Steps](#next-steps)
@@ -32,6 +32,7 @@ This file serves as a project journal, tracking progress, design decisions, and 
 ---
 
 ## 1. Project Overview
+<a name="project-overview"></a>
 
 The initial goal was to use Mistral 7B for both embedding and generation. However, older versions of `llama-cpp-python` only provided a single float per token as output, not the full 4096-dimensional embedding vector.  Therefore, we adopted a *hybrid* approach:
 
@@ -45,7 +46,7 @@ The pipeline chunks documents, creates embeddings, stores them in FAISS, and the
 ---
 
 ## 2. Changelog & Versions
-
+<a name="changelog--versions"></a>
 ### v1.0 (Initial Hybrid RAG) - 2024-02-29
 
 -   Implemented the hybrid approach using Sentence Transformers for embeddings and Mistral 7B for generation.
@@ -64,8 +65,8 @@ The pipeline chunks documents, creates embeddings, stores them in FAISS, and the
 ---
 
 ## 3. Raspberry Pi 5 Photo & Pipeline Diagram
-
-### 3.1 Pi 5 Photo
+<a name="rpi-diagram"></a>
+### 3.1 Pi 5 with AI Hat (beneath)
 
 ![Raspberry Pi 5 Photo with AI hat](images/rpi5_photo.jpg "Raspberry Pi 5 with AI hat")
 
@@ -76,7 +77,7 @@ The pipeline chunks documents, creates embeddings, stores them in FAISS, and the
 ---
 
 ## 4. Hybrid RAG Workflow
-
+<a name="rag-workflow"></a>
 1.  **Download:** The `download_docs.py` script retrieves documents (PDFs and TXT files) from a specified Google Drive folder using a service account.  Downloaded files are stored in the `downloaded_files/` directory.
 2.  **Index:** The `build_faiss_index.py` script performs the following:
     *   Parses the downloaded documents.
@@ -92,7 +93,7 @@ The pipeline chunks documents, creates embeddings, stores them in FAISS, and the
 ---
 
 ## 5. Setup & Requirements
-
+<a name="setup"></a>
 ### 5.1 Pi 5 Environment
 
 -   Raspberry Pi 5 (8GB RAM recommended)
@@ -152,7 +153,7 @@ Consult the `llama-cpp-python` documentation for other build options.
 ---
 
 ## 7. Testing & Benchmarking
-
+<a name="testing"></a>
 ### 7.1 Functional Tests
 
 To perform a basic functional test:
@@ -191,6 +192,7 @@ Key performance metrics to track:
 ---
 
 ## 8. Future Suggestions
+<a name="future"></a>
 
 1.  **Document Preprocessing:** Implement OCR for scanned PDFs and semantic paragraph merging.
 2.  **Alternative Vector Databases:** Explore Milvus, Weaviate, or Chroma for advanced features.
@@ -203,13 +205,14 @@ Key performance metrics to track:
 9.  **Automatic Summarization:** Summarize large chunks before feeding them to Mistral 7B.
 10. **Multi-turn Chat:** Implement basic conversational context.
  
-<a name="next_steps"></a>
-- see also [next_steps.md](next steps)
+- see also [next steps](next_steps.md)
+
+[Next Steps](#next-steps)
 
 ---
 
 ## 9. Credits & Contact
-
+<a name="project-overview"></a>
 © 2025 – Built & tested by RW. (with some AI help...)
 
 **Contributing**
@@ -223,7 +226,7 @@ Open PRs or Issues to:
 ---
 
 ## 10. Example Usage
-
+<a name="usage"></a>
 1.  **Download Documents:**
 
     \`\`\`bash
@@ -258,5 +261,5 @@ Open PRs or Issues to:
 ---
 
 ## 11. Next Steps
-<a name="next_steps"></a>
+<a name="next-steps"></a>
 See the [next_steps.md](next_steps.md) file for a draft roadmap of future development considerations.
