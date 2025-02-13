@@ -1,14 +1,15 @@
-# Raspberry Pi 5 AI (Hybrid RAG) – Project Journal 🚀
+# Raspberry Pi 5 AI Setup (Hybrid RAG) – Project Journal 🚀
 
-This single-file **journal** tracks our **Retrieval-Augmented Generation (RAG)** pipeline on a **Raspberry Pi 5** (16GB model, also Hailo AI hat). We use:
+This `README.md` documents a **Retrieval-Augmented Generation (RAG)** pipeline built on a **Raspberry Pi 5** (16GB model). The project uses:
 
--   **Sentence Transformers** (e.g., `all-MiniLM-L6-v2`) for embeddings
--   **Mistral 7B (Q4_K_M)** for local text generation
--   **FAISS** for vector indexing & retrieval
--   **Google Drive** to fetch docs (PDF/TXT)
--   Occasionally “**fresh Finnish air**” as a quick CPU-cooling hack
+-   **Sentence Transformers** (specifically `all-MiniLM-L6-v2`) for efficient text embeddings.
+-   **Mistral 7B (Q4_K_M)** for local text generation.
+-   **FAISS** for fast vector similarity search.
+-   **Google Drive** as a document source (PDFs and TXT files).
+-   And, when necessary, the "**fresh Finnish air**" method for rapid CPU cooling! (While waiting for PoE hat with cooling.
+-   Also installed a **BM2L-AIS-H8L** AI hat, however only minimal testing so far...
 
-We've iterated on chunking, memory usage, local inference, and other optimizations. This `README.md` is our **journal**, showing versions, best practices, and future expansions.
+This file serves as a project journal, tracking progress, design decisions, and future plans.
 
 ---
 
@@ -21,48 +22,42 @@ We've iterated on chunking, memory usage, local inference, and other optimizatio
 5.  [Setup & Requirements](#setup)
 6.  [Chunking & Tuning](#chunking)
 7.  [Testing & Benchmarking](#testing)
-8.  [Retrospective & Next Steps](#retrospective)
-9.  [Future / "Pro" Suggestions](#pro-suggestions)
-10. [Credits & Contact](#credits)
-11. [Example Usage](#usage)
+8.  [Future / "Pro" Suggestions](#pro-suggestions)
+9.  [Credits & Contact](#credits)
+10. [Example Usage](#usage)
+11. [Next Steps](#next-steps)
 
 ---
 
 ## 1. Project Overview
 
-We initially tried letting **Mistral 7B** embed with older `llama-cpp-python`, but it only output **one float per token**, missing the 4096-d hidden state. Hence, our **hybrid** approach:
+The initial goal was to use Mistral 7B for both embedding and generation. However, older versions of `llama-cpp-python` only provided a single float per token as output, not the full 4096-dimensional embedding vector.  Therefore, we adopted a *hybrid* approach:
 
--   **Sentence Transformers** → CPU-friendly embeddings (~384-dim).
--   **Mistral 7B (Q4_K_M)** → final generation (3–4 tokens/s on Pi 5).
--   **FAISS** → vector indexing/retrieval.
--   **Google Drive** → doc ingestion (via a service account).
+-   **Sentence Transformers:**  Provides CPU-efficient text embeddings (384 dimensions).
+-   **Mistral 7B (Q4_K_M):**  Handles the final text generation (achieving 3-4 tokens/second on the Pi 5).
+-   **FAISS:** Enables fast vector indexing and similarity search.
+-   **Google Drive:**  Serves as the source for documents (PDFs and TXT files), accessed via a service account.
 
-Docs are chunked, embedded, stored in FAISS. At query time, we embed the user question, retrieve top chunks, pass them + question to Mistral for the final answer.
+The pipeline chunks documents, creates embeddings, stores them in FAISS, and then, at query time, embeds the user's question, retrieves the most relevant document chunks from FAISS, and feeds those chunks along with the question to Mistral 7B to generate a final answer.
 
 ---
 
 ## 2. Changelog & Versions
 
-### **v1.0 (Initial Hybrid RAG) - 2024-02-29**
+### v1.0 (Initial Hybrid RAG) - 2024-02-29
 
--   Switched to `all-MiniLM-L6-v2` for embeddings
--   Mistral 7B for generation
--   Implemented `build_faiss_index.py` / `query_rag.py`
+-   Implemented the hybrid approach using Sentence Transformers for embeddings and Mistral 7B for generation.
+-   Created `build_faiss_index.py` and `query_rag.py`.
 
-### **v1.1 (Chunking & Tuning) - 2024-03-03**
+### v1.1 (Chunking & Tuning) - 2024-03-03
 
--   Explored chunk sizes (300–800 chars), overlap ~50
--   Balanced retrieval accuracy vs. indexing overhead
+-   Experimented with different chunk sizes (300-800 characters) and overlap (~50%).
+-   Documented best practices for chunking.
 
-### **v1.2 (Testing & Benchmarking) - 2024-03-07**
+### v1.2 (Testing & Benchmarking) - 2024-03-07
 
--   Timing code for index build & query latency
--   Observed CPU usage ~400% on Pi 5, up to 85°C
--   Memory constraints if chunking is large
-
-More features planned (UI front-end, partial Hailo offload, advanced chunking, etc.).
-
-![Next steps...](next_steps.md "Nex steps...")
+-   Added timing code to measure index building and query latency.
+-   Observed CPU and memory usage on the Raspberry Pi 5.
 
 ---
 
@@ -74,15 +69,23 @@ More features planned (UI front-end, partial Hailo offload, advanced chunking, e
 
 ### 3.2 Pipeline Diagram
 
-![Pipeline Diagram](images/vit-diagram.jpg "RAG Pipeline")
+![Pipeline Diagram](images/pipeline_diagram.png "RAG Pipeline")
 
 ---
 
 ## 4. Hybrid RAG Workflow
 
-1.  **Download**: `download_docs.py` pulls docs from Drive into `downloaded_files/`.
-2.  **Index**: `build_faiss_index.py` parses & chunks docs, embeds them (Sentence Transformers), stores in FAISS.
-3.  **Query**: `query_rag.py` takes user Q, embeds, retrieves top chunks, merges with question → Mistral 7B final answer.
+1.  **Download:** The `download_docs.py` script retrieves documents (PDFs and TXT files) from a specified Google Drive folder using a service account.  Downloaded files are stored in the `downloaded_files/` directory.
+2.  **Index:** The `build_faiss_index.py` script performs the following:
+    *   Parses the downloaded documents.
+    *   Chunks the text content into smaller pieces.
+    *   Creates embeddings for each chunk using Sentence Transformers.
+    *   Stores the embeddings and chunk IDs in a FAISS index (saved to the `faiss_index/` directory).
+3.  **Query:** The `query_rag.py` script handles user queries:
+    *   Embeds the user's question using Sentence Transformers.
+    *   Searches the FAISS index for the most similar document chunks.
+    *   Constructs a prompt for Mistral 7B, including the retrieved chunks and the original question.
+    *   Generates the final answer using Mistral 7B.
 
 ---
 
@@ -90,7 +93,7 @@ More features planned (UI front-end, partial Hailo offload, advanced chunking, e
 
 ### 5.1 Pi 5 Environment
 
--   Pi 5 (8GB now, 16GB expected)
+-   Raspberry Pi 5 (8GB RAM recommended)
 -   Debian Bookworm (64-bit)
 -   Python 3.11+
 
@@ -101,14 +104,11 @@ python3.11 -m venv ~/ai_env
 source ~/ai_env/bin/activate
 \`\`\`
 
-**Memory & Temp Tips**:
-
--   If near memory limit, consider **zswap** or a swapfile.
--   If CPU hits 85°C, use a **fan** or PoE hat, or in a pinch, open a **Finnish balcony door** for fresh air.
+> **Thermal Note:** The Raspberry Pi 5 CPU can reach temperatures of 80-90°C under sustained load.  Using a heatsink and fan, or a PoE hat with a fan, is highly recommended to prevent thermal throttling.
 
 ### 5.2 Dependencies & Models
 
-Make `requirements.txt`:
+Create a `requirements.txt` file with the following contents:
 
 \`\`\`
 sentence-transformers
@@ -120,31 +120,32 @@ google-auth-oauthlib
 llama-cpp-python
 \`\`\`
 
-Then:
+Install the dependencies:
 
 \`\`\`bash
 pip install -r requirements.txt
 \`\`\`
 
-**llama-cpp-python**: On Pi 5, you might do:
+**`llama-cpp-python` Installation:** You may need to specify build flags when installing `llama-cpp-python` on the Raspberry Pi 5.  For example, to disable CUDA (which is not available on the Pi), use:
 
 \`\`\`bash
 CMAKE_ARGS="-DLLAMA_CUBLAS=OFF" pip install llama-cpp-python
 \`\`\`
 
-**Models**:
+Consult the `llama-cpp-python` documentation for other build options.
 
--   Sentence Transformers: `all-MiniLM-L6-v2`
--   Mistral 7B (Q4_K_M): ~4.1 GB in .gguf, from [Hugging Face](https://huggingface.co/TheBloke/Mistral-7B-v0.1-GGUF). Place in `~/models/`.
+**Models:**
+
+-   **Sentence Transformers:**  The project uses `all-MiniLM-L6-v2`. This model will be downloaded automatically by the `sentence-transformers` library.
+-   **Mistral 7B (Q4_K_M):** Download the quantized GGUF file (`mistral-7b-v0.1.Q4_K_M.gguf`, approximately 4.1 GB) from [Hugging Face](https://huggingface.co/TheBloke/Mistral-7B-v0.1-GGUF/resolve/main/mistral-7b-v0.1.Q4_K_M.gguf). Place this file in a `~/models/` directory (or a location specified in your configuration).
 
 ---
 
 ## 6. Chunking & Tuning
 
--   **Chunk size**: ~300–800 chars, overlap ~50
--   If docs are huge, bigger `chunk_size` reduces overhead but might degrade retrieval precision
--   `top_k`: 3–5 usually; if incomplete, 8–10
--   Advanced: break on paragraphs/headings or token-based splits
+-   **Chunk Size:** The recommended chunk size is between 300 and 800 characters, with an overlap of approximately 50 characters.  This balances retrieval precision and indexing overhead.
+-   **`top_k`:**  The `top_k` parameter (number of chunks to retrieve) is typically set to 3-5.  If answers seem incomplete, increase `top_k` to 8-10.
+-   **Advanced Chunking:**  For improved retrieval quality, consider splitting documents by paragraphs or headings, or using more sophisticated token-based splitting methods (e.g., with LangChain's text splitters).
 
 ---
 
@@ -152,65 +153,55 @@ CMAKE_ARGS="-DLLAMA_CUBLAS=OFF" pip install llama-cpp-python
 
 ### 7.1 Functional Tests
 
--   Put a known doc in `downloaded_files/`, run `build_faiss_index.py`, then `query_rag.py`
--   Check correctness of chunk retrieval & final Mistral answer
+To perform a basic functional test:
+
+1.  Place a small test document (PDF or TXT) in the `downloaded_files/` directory.
+2.  Run `build_faiss_index.py` to create the FAISS index.
+3.  Run `query_rag.py` with a question related to the content of the test document.
+4.  Verify that the retrieved chunks are relevant and that Mistral 7B generates a correct answer.
 
 ### 7.2 Performance
 
--   **Index Build** time: chunking + embedding overhead
--   **Query Latency**: embedding question + FAISS retrieval + Mistral generation
--   **Memory/CPU** usage: ~400% CPU on Pi 5, can reach 85°C
+Key performance metrics to track:
 
-### 7.3 Example Benchmarks
+-   **Index Build Time:** The total time taken to chunk and embed the documents and build the FAISS index.
+-   **Query Latency:** The time elapsed between submitting a query and receiving the final answer. This includes embedding the query, searching FAISS, and generating the answer with Mistral 7B.
+-   **Memory and CPU Usage:** Monitor resource usage using tools like `top` or `htop`.
 
-**LLM Inference**:
+### 7.3 Example Benchmarks (Approximate)
 
-| Mode     | Inference Time | RAM Used | CPU Temp |
-|----------|---------------|----------|----------|
-| CPU      | 45.79 s       | ~0.92 GB | ~75.7°C  |
-| Hailo    | 45.85 s       | ~0.92 GB | ~76.3°C  |
+**LLM Inference (Mistral 7B):**
 
-**FAISS Vector Search**:
+| Mode   | Inference Time | RAM Used  | CPU Temp |
+|--------|---------------|----------|----------|
+| CPU    | 45.79 s       | ~0.92 GB | ~75.7°C  |
+| Hailo  | 45.85 s       | ~0.92 GB | ~76.3°C  |
 
-| Dataset        | Indexing Time | Query Speed    |
-|----------------|---------------|----------------|
-| Small Corpus   | 3.2 s         | 0.5 ms/query   |
-| Large Corpus   | TBD           | TBD            |
+**FAISS Vector Search:**
 
----
-
-## 8. Retrospective & Next Steps
-
-**What Went Well**:
-
--   Mistral 7B runs at 3–4 tokens/s on Pi 5, feasible for short queries
--   Sentence Transformers handles doc embeddings quickly
--   Memory usage is manageable with moderate `chunk_size`
-
-**Next Steps**:
-
--   Possibly test bigger `chunk_size` if indexing time is an issue
--   Evaluate concurrency for doc embedding
--   Try alternative embedding models (e.g. `multi-qa-MiniLM-L6-cos-v1`)
+| Dataset       | Indexing Time | Query Speed    |
+|---------------|---------------|----------------|
+| Small Corpus  | 3.2 s         | 0.5 ms/query   |
+| Large Corpus  | TBD           | TBD            |
 
 ---
 
-## 9. Future / "Pro" Suggestions
+## 8. Future / "Pro" Suggestions
 
-1.  **Doc Preprocessing**: OCR, merges
-2.  **Alternate Vector DB**: Milvus, Weaviate, Chroma
-3.  **UI**: small FastAPI/Flask front-end
-4.  **Monitoring**: dashboards for CPU/memory usage
-5.  **Batch Embedding**: embed multiple chunks at once
-6.  **Hybrid Vector+Keyword**: combine boolean + vector
-7.  **Partial Fine-Tuning**: LoRA on Mistral 7B
-8.  **Hailo-8L Offload**: partial layers -> `.hef` if feasible
-9.  **Auto Summaries**: reduce final chunk size
-10. **Multi-turn Chat**: short conversation context
+1.  **Document Preprocessing:** Implement OCR for scanned PDFs and semantic paragraph merging.
+2.  **Alternative Vector Databases:** Explore Milvus, Weaviate, or Chroma for advanced features.
+3.  **Web UI:** Develop a simple web interface using FastAPI or Flask.
+4.  **Monitoring:** Implement logging and monitoring of resource usage (CPU, memory, temperature) using tools like Grafana.
+5.  **Batch Embedding:** Process multiple chunks simultaneously during index building.
+6.  **Hybrid Search:** Combine vector search with keyword-based filtering.
+7.  **Fine-Tuning:** Explore fine-tuning Mistral 7B or using LoRA for domain-specific adaptation.
+8.  **Hailo-8L Offload:** Investigate offloading computation to a Hailo-8L accelerator (experimental).
+9.  **Automatic Summarization:** Summarize large chunks before feeding them to Mistral 7B.
+10. **Multi-turn Chat:** Implement basic conversational context.
 
 ---
 
-## 10. Credits & Contact
+## 9. Credits & Contact
 
 © 2025 – Built & tested by Richard Wirén.
 
@@ -218,15 +209,13 @@ CMAKE_ARGS="-DLLAMA_CUBLAS=OFF" pip install llama-cpp-python
 
 Open PRs or Issues to:
 
--   Add new chunking logic or alternative embeddings
--   Integrate Hailo-8L offload
--   Build a minimal web GUI or multi-turn chat
+-   Add new chunking or embedding methods.
+-   Integrate Hailo-8L offloading.
+-   Develop a web UI.
 
 ---
 
-## 11. Example Usage
-
-Here's how to use the RAG pipeline:
+## 10. Example Usage
 
 1.  **Download Documents:**
 
@@ -234,32 +223,33 @@ Here's how to use the RAG pipeline:
     python download_docs.py --folder-id YOUR_GOOGLE_DRIVE_FOLDER_ID
     \`\`\`
 
-    *(Replace `YOUR_GOOGLE_DRIVE_FOLDER_ID` with the actual ID.  You can omit the `--folder-id` argument if you've set a default folder in the script.)*
+    *(Replace `YOUR_GOOGLE_DRIVE_FOLDER_ID` with the actual ID. Omit `--folder-id` to use a default folder, if configured.)*
 
-2.  **Build the FAISS Index:**
+2.  **Build FAISS Index:**
 
     \`\`\`bash
     python build_faiss_index.py
     \`\`\`
 
-    *(This will process the downloaded documents, create embeddings, and build the FAISS index.  You'll see output in the console showing the progress.)*
+    *(This processes downloaded documents and creates the FAISS index.)*
 
 3.  **Query the System:**
-
-    You can query the system interactively or directly from the command line:
 
     **Interactive Mode:**
 
     \`\`\`bash
     python query_rag.py
     \`\`\`
-    *(Then, type your question at the prompt.)*
+    *(Type your question at the prompt.)*
 
     **Direct Query:**
 
     \`\`\`bash
     python query_rag.py "What is the advantage of Mistral on Pi 5?"
     \`\`\`
-    *(Replace the example question with your own.)*
 
-Happy hacking—embedding with **Sentence Transformers**, generating with **Mistral 7B**, occasionally opening a **Finnish balcony door** to keep CPU temps in check, and evolving this pipeline as we learn more! 🚀
+---
+
+## 11. Next Steps
+<a name="next-steps"></a>
+See the [NEXT_STEPS.md](next_steps.md) file for a detailed roadmap of future development.
