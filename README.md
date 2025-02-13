@@ -77,40 +77,21 @@ We plan to add more advanced features in future versions (UI front-end, partial 
 
 ![Raspberry Pi 5 Photo](images/rpi5_photo.jpg "Raspberry Pi 5")
 
-*(Put `rpi5_photo.jpg` in `images/` folder.)*
-
 ### 3.2 Pipeline Diagram (Refined)
 
 \`\`\`mermaid
 graph LR
-    subgraph "Document Processing"
-        A[Google Drive Docs] --> B(download_docs.py);
-        B --> C{downloaded_files/};
-        C --> D(build_faiss_index.py);
-        D --> E{faiss_index/};
-    end
-    subgraph "Query Processing"
-        F[User Query] --> G(query_rag.py);
-        G --> E;  
-        E --> G;
-        G --> H{Mistral 7B};
-        H --> I[Final Answer];
-    end
-
-    classDef step fill:#f9f,stroke:#333,stroke-width:2px;
-    class A,B,C,D,E,F,G,H,I step;
+    A[Google Drive Docs] --> B(download_docs.py);
+    B --> C(build_faiss_index.py);
+    C --> D(FAISS Index);
+    E[User Query] --> F(query_rag.py);
+    F --> D;
+    D --> F;
+    F --> G(Mistral 7B);
+    G --> H[Final Answer];
 \`\`\`
 
-This diagram uses [Mermaid.js](https://mermaid.js.org/), a JavaScript-based diagramming and charting tool that renders Markdown-inspired text definitions to create and modify diagrams dynamically. GitHub natively supports Mermaid.js, so this diagram will render correctly in your README *without needing any images*.  It's much more maintainable than ASCII art.
-
-Key improvements in the diagram:
-
-*   **Mermaid.js:**  Uses a proper diagramming language.
-*   **Subgraphs:**  Clearly separates "Document Processing" and "Query Processing".
-*   **Clear Labels:**  Uses descriptive labels for each step (e.g., `download_docs.py`, `User Query`).
-*   **Arrows:** Uses directional arrows to show the flow of data.
-*   **Nodes:** Uses different node shapes (rectangles, diamonds) to visually distinguish different types of steps.
-* **ClassDef**: Added styling
+This diagram uses [Mermaid.js](https://mermaid.js.org/).  GitHub natively supports Mermaid.
 
 ---
 
@@ -338,14 +319,3 @@ __pycache__/
     \`\`\`
 
 Happy hacking—embedding with **Sentence Transformers**, generating with **Mistral 7B**, occasionally **opening a Finnish balcony door** to keep the Pi 5 from overheating, and continuing to refine this pipeline as we learn more! 🚀
-
------
-
-**INSTRUCTIONS (Important):**
-
-1.  **Copy:** Copy *all* the text above.
-2.  **Paste:** Paste it into a plain text editor (like Notepad on Windows, TextEdit on Mac, or a similar editor).  *Do not* paste it directly into a rich text editor or word processor.
-3.  **Replace:** Use your text editor's "Find and Replace" feature (usually Ctrl+H or Cmd+H) to find all occurrences of `\`\`\`` and replace them with ```.  This will unescape the backticks.
-4.  **Save:** Save the file as `README.md`.
-
-Now you have a single, unbroken Markdown file. Enjoy!
