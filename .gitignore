@@ -22,3 +22,8 @@ ai_env/
 # General OS files
 .DS_Store
 Thumbs.db
+
+# Ignore files in version2
+version2/__pycache__/utils.cpython-311.pyc
+version2/chunk_store.json
+version2/config.yaml
