@@ -72,7 +72,7 @@ More features planned (UI front-end, partial Hailo offload, advanced chunking, e
 
 ### 3.2 Pipeline Diagram
 
-![Pipeline Diagram](images/vit-diagram.png "RAG Pipeline")
+![Pipeline Diagram](images/vit-diagram.jpg "RAG Pipeline")
 
 ---
 
