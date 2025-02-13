@@ -1,0 +1,24 @@
+/boxcomment +di
++---------------------+     +------------------------+     +-----------------+     +-----------------+
+|   Google Drive      | --> |  build_faiss_index.py  | --> | downloaded_files| --> |   query_rag.py  |
+|   (PDFs, TXTs)     |     |   (1. Parse & OCR)     |     |  (PDFs, TXTs)   |     |   (User Query)  |
++---------------------+     |   (2. Chunk Text)      |     +-----------------+     +--------+--------+
+                            |   (3. Create Embeddings)|             |
+                            |   (4. Build/Update     |             |
+                            |        FAISS Index)    |             V
+                            |   (5. Save Chunk Data) |     +-----------------+
+                            +------------------------+     |  Retrieve Chunks |
+                                  |                    +--------+--------+
+                                  |                            |
+                                  V                            |
+                        +------------------------+      Load      |
+                        |      Chunk Store       | <------------+
+                        |   (chunk_store.json)   |             |
+                        +------------------------+             |
+                                  ^                            |
+                                  |                            |
+                        +------------------------+     +-----------------+     +-----------------+
+                        |      FAISS Index       |     |   Mistral 7B    | --> |  Final Answer   |
+                        |   (index.faiss)        | <-- |   (Generation)  |     +-----------------+
+                        +------------------------+     +-----------------+
+/

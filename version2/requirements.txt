@@ -1,0 +1,13 @@
+sentence-transformers
+faiss-cpu
+PyPDF2
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib
+llama-cpp-python
+pyyaml
+requests
+beautifulsoup4
+pytesseract
+pillow
+pdf2image
