@@ -1,140 +1,300 @@
-# Raspberry Pi 5 AI Setup 🚀
+# Raspberry Pi 5 AI Setup (Hybrid RAG) – Project Journal 🚀
 
-This project focuses on deploying **local LLMs, vector search, and AI-enhanced workflows** on the **Raspberry Pi 5**.
-It includes optimizations for running **efficient** AI models, leveraging **Hailo-8L AI acceleration**, and integrating **vector search**.
-
----
-
-## 🏗️ Project Overview
-
-### ✅ Current AI Stack:
-| **Component**              | **Model/Technology**       | **Purpose**                          |
-|----------------------------|----------------------------|--------------------------------------|
-| **LLM (Chatbot)**          | Gemma-2B (Q4_K_M)          | General LLM responses                |
-| **RAG (Summarization)**    | Mistral-7B (Q4_K_M)        | Retrieval-augmented generation       |
-| **Vector Search**          | FAISS / ChromaDB           | Efficient search & retrieval         |
-| **Hardware Acceleration**  | Hailo-8L AI Hat            | Offloading AI tasks                  |
+This repository showcases a **Retrieval-Augmented Generation (RAG)** pipeline on a **Raspberry Pi 5** (8GB, anticipating future 16GB models). Over time, we've **iterated** on the design, focusing on **document chunking**, **embedding** with a smaller model, and **final text generation** using **Mistral 7B (Q4_K_M)**. This `README.md` evolves like a **journal**, tracking our updates, versions, and future goals.
 
 ---
 
-## 🔧 Setup & Configuration
+## Table of Contents
 
-### 1️⃣ Raspberry Pi 5 Setup:
-- Installed **Raspberry Pi OS (64-bit)**
-- Set up **SSH**, locales, and expanded filesystem.
-- Configured **Zswap & memory optimizations** (`zswap.enabled=1`, `vm.swappiness=100`).
-- Optimized **power & thermal management**.
-
-### 2️⃣ Local LLM Inference:
-- Installed `llama-cpp-python` to run **Mistral-7B (Q4_K_M)**.
-- Successfully tested **n_ctx=16384** as a stable max context window.
-
-### 3️⃣ Vector Search:
-- **FAISS** `1.10.0` installed and configured.
-- Successfully **indexed embeddings** & retrieved relevant search results.
-
-### 4️⃣ Hailo-8L AI Accelerator:
-- Installed `hailortcli` and confirmed **firmware 4.20.0** is working.
-- Hailo-8L identified as **Hailo-8L AI ACC M.2 A+E KEY MODULE EXT TMP**.
-- Some **firmware config files failed to load**, but basic functionality is available.
-- Need to test **LLM offloading** on Hailo.
+1.  [Project Overview](#project-overview)
+2.  [Changelog & Versions](#changelog--versions)
+3.  [Raspberry Pi 5 Photo & Diagram](#raspberry-pi-5-photo--diagram)
+4.  [Hybrid RAG Pipeline](#hybrid-rag-pipeline)
+5.  [Setup & Requirements](#setup--requirements)
+6.  [Chunking & Tuning](#chunking--tuning)
+7.  [Testing & Benchmarking](#testing--benchmarking)
+8.  [Future / "Pro Version" Suggestions](#future--pro-version-suggestions)
+9.  [Repo Structure & .gitignore](#repo-structure--gitignore)
+10. [Credits & Contact](#credits--contact)
+11. [Example Usage](#example-usage)
 
 ---
 
-## 🛠️ Benchmarks
+## 1. Project Overview
+<a name="project-overview"></a>
 
-### **LLM Inference:**
-| **Mode**  | **Inference Time** | **RAM Used** | **CPU Temp** |
-|-----------|--------------------|-------------|-------------|
-| **CPU**   | 45.79 sec          | 0.92 GB     | 75.7°C      |
-| **Hailo** | 45.85 sec          | 0.92 GB     | 76.3°C      |
+Originally, we attempted to embed with **Mistral 7B** via `llama-cpp-python`. However, older builds only returned **1 float per token**, not a 4096-dimensional vector. Hence, we pivoted to:
 
-### **Vector Search (FAISS):**
-| **Dataset**    | **Indexing Time** | **Query Speed** |
-|----------------|-------------------|-----------------|
-| Small Corpus   | 3.2 sec          | 0.5 ms/query    |
-| Large Corpus   | TBD              | TBD             |
+-   **Sentence Transformers** for **embeddings** (e.g., `all-MiniLM-L6-v2`).
+-   **Mistral 7B (Q4_K_M)** for **final text generation**.
+-   **FAISS** for vector indexing.
+
+**Google Drive** integration is used to **download** PDFs/TXT, which we parse, chunk, and store in the FAISS index. On queries, we embed the question with Sentence Transformers, retrieve top-k chunks, and feed them + the question to Mistral for the final answer.  Authentication uses a service account (see `api-credentials.json` and `service_account_key.json` in `.gitignore`).  We currently support PDF and TXT files, with basic error handling for download failures.
 
 ---
 
-## 📌 Next Steps
+## 2. Changelog & Versions
+<a name="changelog--versions"></a>
 
-1️⃣ **Test Hailo-8L AI acceleration** for LLM offloading.  
-2️⃣ **Optimize embeddings for RAG** (ensure consistent vector sizes).  
-3️⃣ **Compare FAISS vs. ChromaDB** for vector search.  
-4️⃣ **Document & automate** the setup into scripts for easy deployment.
+We maintain a **journal** of changes:
 
----
+### **v1.0 (Initial Hybrid RAG) - 2024-02-29**
 
-## 📜 Logs & Documentation
+-   **Switched** to a smaller embedding model (`all-MiniLM-L6-v2`).
+-   **Used** Mistral 7B strictly for generation.
+-   **Implemented** `build_faiss_index.py` & `query_rag.py`.
 
-- **System logs:** `rpi5_ai_setup_log.txt`  
-- **LLM Context Length Tests:** `mistral_ctx_test.log`  
-- **Benchmark results:** `benchmark_results.log`  
-- **Hailo Logs:** `hailort.log`  
+### **v1.1 (Chunking & Tuning) - 2024-03-03**
 
----
+-   Explored **chunk sizes** (300–800 chars).
+-   Set overlap ~50 to avoid cutting context.
+-   Documented best practices for balancing retrieval accuracy vs. indexing overhead.
 
-## 🔐 Security & Secrets
+### **v1.2 (Testing & Benchmarking) - 2024-03-07**
 
-This project now **excludes** all sensitive files (like OAuth credentials or service account JSONs) from version control. These files are stored in a secure folder outside the repo (`~/secure-keys/`). To ensure you don’t accidentally commit them:
+-   Added **timing code** in scripts to measure index build time.
+-   Began tracking **query latency** (embed + FAISS retrieval + Mistral generation).
+-   Noted CPU usage & memory constraints on Pi 5.
 
-1. **Add** credential filenames to `.gitignore` (e.g. `client_secret.json`, `api-credentials.json`, `service_account_key.json`).  
-2. Never commit or push these files to GitHub.  
-3. If you accidentally commit them, **revoke** and **regenerate** the keys in [Google Cloud Console](https://console.cloud.google.com/apis/credentials).
-
----
-
-## 📂 Google Drive Integration
-
-We use a **service account** to fetch files from Google Drive headlessly:
-
-1. **Service Account & Key**: Create a service account in Google Cloud, grant it access to your Drive folder, and store its JSON key in `~/secure-keys/`.  
-2. **Download** or **list** files with the Drive API in Python.  
-3. **Parse** and **embed** the text, then index in FAISS.
-
-This ensures no interactive OAuth is needed on the Pi.
+Future versions (see [Section 8](#future--pro-version-suggestions)) will incorporate more advanced features (UI front-end, advanced chunking logic, potential partial Hailo offload, etc.).
 
 ---
 
-## 🤝 Contributing
+## 3. Raspberry Pi 5 Photo & Diagram
+<a name="raspberry-pi-5-photo--diagram"></a>
 
-Feel free to submit issues & PRs to improve this **Raspberry Pi AI setup!**
-This project is **open-source**, and contributions are welcome. 🚀
+### 3.1 Photo
+
+Here's a **close-up photo** of the Raspberry Pi 5 in action (example):
+
+![Raspberry Pi 5 Photo](images/rpi5_photo.jpg "Raspberry Pi 5")
+
+*(Place the actual image `rpi5_photo.jpg` in an `images/` folder in your repo.)*
+
+### 3.2 Minimal Pipeline Diagram
+
+Below is a simple ASCII pipeline with **no extra fluff**:
+
+\`\`\`
+
+┌───────────┐ ┌────────────────┐ ┌─────────────────┐
+│ Drive │ │ build\_faiss\_ │ │ query\_rag.py │
+│ docs dl │─→ │ index.py │──────→│ (User query) │
+└───────────┘ │ (Parse, chunk, │ │ embed + retrieve│
+│ embed, store │ │ top chunks -\> │
+│ in FAISS) │ │ Mistral 7B gen │
+└────────────────┘ └─────────────────┘
+
+\`\`\`
 
 ---
 
-## 📌 References
-- [Hailo AI Hat Docs](https://hailo.ai/)
-- [Raspberry Pi 5 Official Docs](https://www.raspberrypi.com/)
-- [FAISS Vector Search](https://faiss.ai/)
-- [Mistral AI Models](https://mistral.ai/)
+## 4. Hybrid RAG Pipeline
+<a name="hybrid-rag-pipeline"></a>
+
+### 4.1 Basic Flow
+
+1.  **Download**: `download_docs.py` fetches docs from Google Drive into `downloaded_files/`.
+2.  **Build Index**: `build_faiss_index.py` parses docs, chunks them, embeds each chunk with Sentence Transformers, stores vectors in FAISS (saved in `faiss_index/`).
+3.  **Query**: `query_rag.py` embeds the question, retrieves top chunks from FAISS, merges them into a prompt, and calls Mistral 7B for the final answer.
+
+### 4.2 Why Sentence Transformers + Mistral?
+
+-   **Sentence Transformers** → **fast CPU-based embeddings** (e.g. 384-d vectors).
+-   **Mistral 7B** → advanced local generation, ~3–4 tokens/s on Pi 5.
 
 ---
 
-## Retrospective Reflection on the Raspberry Pi 5 AI Project 🚀
+## 5. Setup & Requirements
+<a name="setup--requirements"></a>
 
-1️⃣ **What Went Well?** ✅  
-- **Hands-on Learning**: You’ve successfully set up Mistral-7B (Q4_K_M) on Raspberry Pi 5, tested different configurations, and integrated FAISS for vector search.  
-- **AI Hat Integration**: The Hailo-8L accelerator is installed, recognized, and responding to system queries.  
-- **Performance & Stability Testing**: You stress-tested `n_ctx` values, monitored RAM/CPU usage/temperatures, and used zswap to improve memory management.  
-- **Documentation & GitHub**: Well-structured commits and progress logs make the project easier to replicate for others.
+### 5.1 Raspberry Pi 5 Environment
 
-2️⃣ **What Was Challenging?** 🤔  
-- **Debugging Loops**: Issues around FAISS embeddings, model inconsistencies, and Hailo firmware led to repeated troubleshooting.  
-- **Hailo Acceleration**: While recognized, full offloading hasn’t been confirmed yet—some firmware warnings remain.  
-- **LLM & RAG Confusion**: Mistral-7B is used for both chatbot and summarization RAG tasks, which might need separate configs or models.
+-   **OS**: Debian Bookworm (64-bit).
+-   **Python**: 3.11+
 
-3️⃣ **What Can Be Improved?** 📈  
-- **Refactor Codebase**: Ensure embedding dimensions match for FAISS, confirm RAG pipelines are properly integrated.  
-- **Clarify AI Acceleration**: More benchmarking is needed to confirm which workloads run on Hailo vs. CPU.  
-- **Optimize Model Selection**: Possibly use a smaller, specialized model for RAG vs. a bigger model for chat.  
-- **Smoother Setup**: A step-by-step guide or shell script would help new users replicate the environment.
+\`\`\`bash
+sudo apt-get update
+sudo apt-get install python3.11 python3.11-venv
+python3.11 -m venv ~/ai_env
+source ~/ai_env/bin/activate
+\`\`\`
 
-4️⃣ **Next Steps** 🔜  
-- **Confirm FAISS embeddings** are consistent and debug dimensional mismatch.  
-- **Benchmark** and verify Hailo offloading vs. CPU inference.  
-- **Differentiate RAG & Chatbot** usage (pick appropriate model sizes).  
-- **Polish & Document** the final steps for public release.
+### 5.2 Install Dependencies
 
-Overall, the project has come a long way. With a bit more optimization and clarity on Hailo offloading, it’ll be an impressive local AI system running on the Pi 5! 🌍🚀
+Create a `requirements.txt` file with the following content:
+
+\`\`\`
+sentence-transformers
+faiss-cpu
+PyPDF2
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib
+llama-cpp-python
+\`\`\`
+
+Then install:
+
+\`\`\`bash
+pip install -r requirements.txt
+\`\`\`
+
+**llama-cpp-python Installation Note:** You might need specific build flags for your Pi 5.  Consult the `llama-cpp-python` documentation.  An example (disabling CUDA) is:
+
+\`\`\`bash
+CMAKE_ARGS="-DLLAMA_CUBLAS=OFF" pip install llama-cpp-python
+\`\`\`
+
+### 5.3 Models
+
+  - Sentence Transformers: `all-MiniLM-L6-v2` (automatically downloaded by the library).
+  - Mistral 7B (Q4\_K\_M): Download the `mistral-7b-v0.1.Q4_K_M.gguf` file (approximately 4.1 GB) from [Hugging Face](https://huggingface.co/TheBloke/Mistral-7B-v0.1-GGUF). Place it in a directory, e.g., `~/models/`.
+
+-----
+
+## 6\. Chunking & Tuning
+
+<a name="chunking--tuning"></a>
+
+### 6.1 Chunk Size & Overlap
+
+  - Typical range: 300–800 characters, overlap \~50.
+  - Smaller `chunk_size` → finer retrieval but more overhead.
+  - Larger `chunk_size` → fewer chunks, can degrade retrieval precision.
+
+### 6.2 Advanced Splitting
+
+  - Paragraph / Heading splits for semantic coherence.
+  - Use libraries like LangChain Text Splitters if you want advanced token-based or paragraph-based logic.
+
+### 6.3 top\_k & Similarity Threshold
+
+  - Usually retrieve top-3 to top-5 chunks.
+  - If results are incomplete, consider top-8 or top-10.
+  - Optionally filter out chunks below a similarity threshold to reduce noise.
+
+-----
+
+## 7\. Testing & Benchmarking
+
+<a name="testing--benchmarking"></a>
+
+### 7.1 Functional Tests
+
+  - End-to-end: Put a small doc in `downloaded_files/`, run `build_faiss_index.py`, then `query_rag.py` with known questions.
+  - Check if the correct chunk is retrieved & if Mistral’s final answer is accurate.
+
+### 7.2 Performance
+
+  - Index Build Time: measure how long chunking + embedding takes.
+  - Query Latency: measure time from user input → final Mistral response.
+      - Embedding query time
+      - FAISS retrieval time
+      - Mistral generation time (often the bottleneck).
+
+### 7.3 Memory & CPU
+
+  - Monitor with `top` or `htop`. Pi 5 can run at \~400% CPU usage, \~80–90°C.
+  - A fan or PoE hat recommended to avoid throttling, or the famous Finnish balcony door if you need an immediate temperature drop.
+
+-----
+
+## 8\. Future / "Pro Version" Suggestions
+
+<a name="future--pro-version-suggestions"></a>
+
+Now that we have a stable pipeline, here are 10 advanced ideas:
+
+1.  **Advanced Document Preprocessing:** Use semantic paragraph merging, or run OCR on scanned PDFs.
+2.  **Alternative Vector Stores:** Try Milvus, Weaviate, or Chroma for advanced filtering or distributed setups.
+3.  **UI/UX Enhancements:** Build a small FastAPI or Flask front-end with a web interface.
+4.  **Monitoring & Logging:** Log each query, measure latency, memory usage, and temperature. Possibly use Grafana dashboards.
+5.  **Batch Embedding:** Speed up index build by embedding multiple chunks at once (instead of chunk-by-chunk).
+6.  **Hybrid Vector + Keyword:** Combine simple keyword filtering with vector similarity for better precision.
+7.  **Partial Fine-Tuning:** Consider LoRA for domain-specific tuning of Mistral 7B or a smaller model.
+8.  **Hailo-8L Offload:** If feasible, compile partial layers to `.hef` for the Hailo Hat. May require ONNX export. [Hailo Documentation](https://hailo.ai/developer-zone/).
+9.  **Automatic Summaries:** Summarize large chunks to reduce the amount of text Mistral sees.
+10. **Multi-turn Chat:** Extend `query_rag.py` into a persistent chat, storing conversation context in memory or a short-term buffer.
+
+-----
+
+## 9\. Repo Structure & .gitignore
+
+<a name="repo-structure--gitignore"></a>
+
+Recommended structure:
+
+\`\`\`
+rpi5-ai-setup/
+├── README.md                  # This file (journal)
+├── download_docs.py           # Optional Google Drive fetch
+├── build_faiss_index.py       # Parse, chunk, embed => FAISS
+├── query_rag.py              # Retrieval + Mistral generation
+├── requirements.txt           # Dependencies
+├── images/
+│   └── rpi5_photo.jpg
+├── downloaded_files/          # Downloaded documents (ignored by git)
+├── faiss_index/               # FAISS index (ignored by git)
+└── ...
+\`\`\`
+
+`.gitignore`:
+
+\`\`\`
+api-credentials.json
+service_account_key.json
+downloaded_files/
+faiss_index/
+*.faiss
+chunk_metadata.pkl
+*.log
+__pycache__/
+\`\`\`
+
+`chunk_metadata.pkl`: Stores metadata about the chunks, such as their original document and location, for easier debugging and analysis.
+
+-----
+
+## 10\. Credits & Contact
+
+<a name="credits--contact"></a>
+
+© 2025 – Built & tested by Richard Wirén, Lead Solution Architect.
+Contact: [Richard Wirén's LinkedIn](https://www.linkedin.com/in/richardwiren/)
+
+**Contributing**
+
+Open PRs or Issues to:
+
+  - Add new chunking logic or alternative embeddings
+  - Integrate Hailo-8L offload
+  - Add a minimal web GUI or multi-turn chat
+
+-----
+
+## 11\. Example Usage
+
+<a name="example-usage"></a>
+
+1.  **Download documents:**
+
+    \`\`\`bash
+    python download_docs.py
+    \`\`\`
+
+2.  **Build the FAISS index:**
+
+    \`\`\`bash
+    python build_faiss_index.py
+    \`\`\`
+
+3.  **Query the RAG system:**
+
+    \`\`\`bash
+    python query_rag.py "Your question here"
+    \`\`\`
+
+-----
+
+Happy hacking—with a Pi 5 RAG pipeline that's carefully chunked, tested, and ready for next-level "Pro" expansions. 🚀
