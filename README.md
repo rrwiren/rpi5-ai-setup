@@ -68,7 +68,7 @@ The pipeline chunks documents, creates embeddings, stores them in FAISS, and the
 <a name="rpi-diagram"></a>
 ### 3.1 Pi 5 with AI Hat (beneath)
 
-![Raspberry Pi 5 Photo with AI hat](images/rpi5_photo.jpg "Raspberry Pi 5 with AI hat")
+![Close-up of a Raspberry Pi 5](images/rpi5_photo.jpg "Raspberry Pi 5").
 
 ### 3.2 Pipeline Diagram
 
@@ -96,7 +96,7 @@ The pipeline chunks documents, creates embeddings, stores them in FAISS, and the
 <a name="setup"></a>
 ### 5.1 Pi 5 Environment
 
--   Raspberry Pi 5 (8GB RAM recommended)
+-   Raspberry Pi 5 (16GB RAM recommended)
 -   Debian Bookworm (64-bit)
 -   Python 3.11+
 
@@ -140,7 +140,7 @@ Consult the `llama-cpp-python` documentation for other build options.
 **Models:**
 
 -   **Sentence Transformers:**  The project uses `all-MiniLM-L6-v2`. This model will be downloaded automatically by the `sentence-transformers` library.
--   **Mistral 7B (Q4_K_M):** Download the quantized GGUF file (`mistral-7b-v0.1.Q4_K_M.gguf`, approximately 4.1 GB) from [Hugging Face](https://huggingface.co/TheBloke/Mistral-7B-v0.1-GGUF/resolve/main/mistral-7b-v0.1.Q4_K_M.gguf). Place this file in a `~/models/` directory (or a location specified in your configuration).
+-   Mistral 7B (Q4_K_M): ~4.1 GB in .gguf. Download directly from [Hugging Face](https://huggingface.co/TheBloke/Mistral-7B-v0.1-GGUF/resolve/main/mistral-7b-v0.1.Q4_K_M.gguf) and place it in `~/models/`..
 
 ---
 
@@ -194,16 +194,16 @@ Key performance metrics to track:
 ## 8. Future Suggestions
 <a name="future"></a>
 
-1.  **Document Preprocessing:** Implement OCR for scanned PDFs and semantic paragraph merging.
-2.  **Alternative Vector Databases:** Explore Milvus, Weaviate, or Chroma for advanced features.
-3.  **Web UI:** Develop a simple web interface using FastAPI or Flask.
-4.  **Monitoring:** Implement logging and monitoring of resource usage (CPU, memory, temperature).
-5.  **Batch Embedding:** Process multiple chunks simultaneously during index building.
-6.  **Hybrid Search:** Combine vector search with keyword-based filtering.
-7.  **Fine-Tuning:** Explore fine-tuning Mistral 7B or using LoRA for domain-specific adaptation.
-8.  **Hailo-8L Offload:** Investigate offloading computation to a Hailo-8L accelerator (experimental).
-9.  **Automatic Summarization:** Summarize large chunks before feeding them to Mistral 7B.
-10. **Multi-turn Chat:** Implement basic conversational context.
+-  **Document Preprocessing:** Implement OCR for scanned PDFs and semantic paragraph merging.
+-  **Alternative Vector Databases:** Explore Milvus, Weaviate, or Chroma for advanced features.
+-  **Web UI:** Develop a simple web interface using FastAPI or Flask.
+-  **Monitoring:** Implement logging and monitoring of resource usage (CPU, memory, temperature).
+-  **Batch Embedding:** Process multiple chunks simultaneously during index building.
+-  **Hybrid Search:** Combine vector search with keyword-based filtering.
+-  **Fine-Tuning:** Explore fine-tuning Mistral 7B or using LoRA for domain-specific adaptation.
+-  **Hailo-8L Offload:** Investigate offloading computation to a Hailo-8L accelerator (experimental).
+-  **Automatic Summarization:** Summarize large chunks before feeding them to Mistral 7B.
+-  **Multi-turn Chat:** Implement basic conversational context.
  
 - see also [next steps](#next-steps)
 
@@ -211,7 +211,7 @@ Key performance metrics to track:
 
 ## 9. Credits & Contact
 <a name="project-overview"></a>
-© 2025 – Built & tested by RW. (with some AI help...)
+© 2025 – Built & tested by Richard (at) Wiren dot fi. (with some AI help...)
 
 **Contributing**
 
@@ -246,14 +246,14 @@ Open PRs or Issues to:
     **Interactive Mode:**
 
     \`\`\`bash
-    python query_rag.py
+    python query_rag.py  # Start the interactive query prompt
     \`\`\`
     *(Type your question at the prompt.)*
 
     **Direct Query:**
 
     \`\`\`bash
-    python query_rag.py "What is the advantage of Mistral on Pi 5?"
+    python query_rag.py "What is the advantage of Mistral on Pi 5?"  # Run with a direct query
     \`\`\`
 
 ---
