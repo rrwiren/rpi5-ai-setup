@@ -205,9 +205,7 @@ Key performance metrics to track:
 9.  **Automatic Summarization:** Summarize large chunks before feeding them to Mistral 7B.
 10. **Multi-turn Chat:** Implement basic conversational context.
  
-- see also [next steps](next_steps.md)
-
-[Next Steps](#next-steps)
+- see also [next steps](#next-steps)
 
 ---
 
