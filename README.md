@@ -77,20 +77,40 @@ We plan to add more advanced features in future versions (UI front-end, partial 
 
 ![Raspberry Pi 5 Photo](images/rpi5_photo.jpg "Raspberry Pi 5")
 
+*(Put `rpi5_photo.jpg` in `images/` folder.)*
+
 ### 3.2 Pipeline Diagram (Refined)
 
-\`\`\`
-                  ┌──────────────────┐
-                  │ build_faiss_     │
-┌─────────────┐   │ index.py         │         ┌─────────────────────┐
-│ Google Drive│ → │ (Parse, chunk,   │  ----→  │ query_rag.py        │
-│ docs        │   │  embed => FAISS) │         │ (User question ->   │
-└─────────────┘   └──────────────────┘         │  embed -> retrieve  │
-                                               │  -> Mistral 7B)     │
-                                               └─────────────────────┘
+\`\`\`mermaid
+graph LR
+    subgraph "Document Processing"
+        A[Google Drive Docs] --> B(download_docs.py);
+        B --> C{downloaded_files/};
+        C --> D(build_faiss_index.py);
+        D --> E{faiss_index/};
+    end
+    subgraph "Query Processing"
+        F[User Query] --> G(query_rag.py);
+        G --> E;  
+        E --> G;
+        G --> H{Mistral 7B};
+        H --> I[Final Answer];
+    end
+
+    classDef step fill:#f9f,stroke:#333,stroke-width:2px;
+    class A,B,C,D,E,F,G,H,I step;
 \`\`\`
 
-We fetch docs via `download_docs.py`, index them with `build_faiss_index.py`, then handle queries in `query_rag.py`.
+This diagram uses [Mermaid.js](https://mermaid.js.org/), a JavaScript-based diagramming and charting tool that renders Markdown-inspired text definitions to create and modify diagrams dynamically. GitHub natively supports Mermaid.js, so this diagram will render correctly in your README *without needing any images*.  It's much more maintainable than ASCII art.
+
+Key improvements in the diagram:
+
+*   **Mermaid.js:**  Uses a proper diagramming language.
+*   **Subgraphs:**  Clearly separates "Document Processing" and "Query Processing".
+*   **Clear Labels:**  Uses descriptive labels for each step (e.g., `download_docs.py`, `User Query`).
+*   **Arrows:** Uses directional arrows to show the flow of data.
+*   **Nodes:** Uses different node shapes (rectangles, diamonds) to visually distinguish different types of steps.
+* **ClassDef**: Added styling
 
 ---
 
@@ -126,7 +146,7 @@ python3.11 -m venv ~/ai_env
 source ~/ai_env/bin/activate
 \`\`\`
 
-**Memory Tips**:  - If you run near 8GB, consider enabling **zswap** or a small swapfile.  - If you see high CPU temps (~85°C), a fan or PoE hat is strongly recommended. In a pinch, **opening your balcony door** in a cold climate can drop the Pi 5 temp quickly—though not an ideal permanent fix.
+> **Thermal Note:** Under sustained load, the Pi 5 CPU can hit 80–90°C. A fan or PoE hat is strongly recommended. In a pinch—especially in Finland—opening your balcony door for some fresh, cold air can quickly cool the device if you see 85°C+.
 
 ### 5.2 Dependencies & Models
 
@@ -148,22 +168,24 @@ Then:
 pip install -r requirements.txt
 \`\`\`
 
-**llama-cpp-python**: On Pi 5, you may need:
+**llama-cpp-python Installation Note:** On the Raspberry Pi 5, you might need to specify build flags to disable features that aren't supported or to optimize performance. For example, to disable CUDA (which isn't available on the Pi), you might use:
 
 \`\`\`bash
 CMAKE_ARGS="-DLLAMA_CUBLAS=OFF" pip install llama-cpp-python
 \`\`\`
 
-**Models**:
+Consult the `llama-cpp-python` documentation for other available flags.
 
--   Sentence Transformers: `all-MiniLM-L6-v2`
--   Mistral 7B (Q4_K_M): ~4.1 GB in .gguf from [Hugging Face](https://huggingface.co/TheBloke/Mistral-7B-v0.1-GGUF). Place in `~/models/`.
+### 5.3 Models
 
----
+-   Sentence Transformers: `all-MiniLM-L6-v2` (downloaded automatically).
+-   Mistral 7B (Q4_K_M): ~4.1 GB in .gguf. Download directly from [Hugging Face](https://huggingface.co/TheBloke/Mistral-7B-v0.1-GGUF/resolve/main/mistral-7b-v0.1.Q4_K_M.gguf) and place it in `~/models/`.
 
-<a name="chunking"></a>
+-----
 
 ## 6. Chunking & Tuning
+
+<a name="chunking"></a>
 
 -   **Chunk Size**: 300–800 chars recommended, overlap ~50
 -   **Advanced**: break on paragraphs/headings or use token-based splits (LangChain, etc.)
@@ -175,6 +197,8 @@ CMAKE_ARGS="-DLLAMA_CUBLAS=OFF" pip install llama-cpp-python
 <a name="testing"></a>
 
 ## 7. Testing & Benchmarking
+
+<a name="testing"></a>
 
 ### 7.1 Functional Tests
 
@@ -189,24 +213,19 @@ CMAKE_ARGS="-DLLAMA_CUBLAS=OFF" pip install llama-cpp-python
 
 ### 7.3 Example Benchmarks (Disclaimers: approximate data)
 
-**LLM Inference**:
+**LLM Inference:**
 
-| Mode   | Inference Time | RAM Used | CPU Temp |
+| Mode   | Inference Time | RAM Used  | CPU Temp |
 |--------|---------------|----------|----------|
 | CPU    |  45.79 s       | ~0.92 GB | ~75.7°C  |
 | Hailo  |  45.85 s       | ~0.92 GB | ~76.3°C  |
 
-- Mistral LLM not optimized for AI Hat...
-
-**FAISS Vector Search**:
+**FAISS Vector Search:**
 
 | Dataset       | Indexing Time | Query Speed    |
 |---------------|---------------|----------------|
 | Small Corpus  | 3.2 s         | 0.5 ms/query   |
 | Large Corpus  | TBD           | TBD            |
-
-- Reference numbers only to show scale, more info and actual logs when progressing...
-
 ---
 
 <a name="retrospective"></a>
@@ -321,3 +340,12 @@ __pycache__/
 Happy hacking—embedding with **Sentence Transformers**, generating with **Mistral 7B**, occasionally **opening a Finnish balcony door** to keep the Pi 5 from overheating, and continuing to refine this pipeline as we learn more! 🚀
 
 -----
+
+**INSTRUCTIONS (Important):**
+
+1.  **Copy:** Copy *all* the text above.
+2.  **Paste:** Paste it into a plain text editor (like Notepad on Windows, TextEdit on Mac, or a similar editor).  *Do not* paste it directly into a rich text editor or word processor.
+3.  **Replace:** Use your text editor's "Find and Replace" feature (usually Ctrl+H or Cmd+H) to find all occurrences of `\`\`\`` and replace them with ```.  This will unescape the backticks.
+4.  **Save:** Save the file as `README.md`.
+
+Now you have a single, unbroken Markdown file. Enjoy!
