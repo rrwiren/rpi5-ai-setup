@@ -1,6 +1,6 @@
 # config.yaml
-google_drive_folder_id: "1aHrMTr3_nrLiN0sJ6_RTjr0NM230Pi3A"  # Replace with your folder ID
-service_account_file: "/home/riku/secure-keys/api-project-970767241608-5f275b1e55da.json" # service account
+google_drive_folder_id: "YOUR FOLDER"  # Replace with your folder ID
+service_account_file: "/home/riku/secure-keys/api-project.json" # service account
 scopes:
   - "https://www.googleapis.com/auth/drive.readonly"
 embedding_model: "all-MiniLM-L6-v2"

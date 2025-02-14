@@ -24,6 +24,8 @@ ai_env/
 Thumbs.db
 
 # Ignore files in version2
+*.pyc
+*.yaml
 version2/__pycache__/utils.cpython-311.pyc
 version2/chunk_store.json
 version2/config.yaml
