@@ -46,34 +46,37 @@ The pipeline chunks documents, creates embeddings, stores them in FAISS, and the
 ---
 
 ## 2. Changelog & Versions
-<a name="changelog--versions"></a>
-### v1.0 (Initial Hybrid RAG) - 2025-02-29
 
--   Implemented the hybrid approach using Sentence Transformers for embeddings and Mistral 7B for generation.
--   Created `build_faiss_index.py` and `query_rag.py`.
+### **Development History**
 
-### v1.1 (Chunking & Tuning) - 2025-03-03
+*   **v1.0 (Initial Hybrid RAG) - 2024-02-29**
+    *   Switched to `all-MiniLM-L6-v2` for embeddings.
+    *   Used Mistral 7B for generation only.
+    *   Implemented `build_faiss_index.py` and `query_rag.py`.
 
--   Experimented with different chunk sizes (300-800 characters) and overlap (~50%).
--   Documented best practices for chunking.
+*   **v1.1 (Chunking & Tuning) - 2024-03-03**
+    *   Explored chunk sizes and overlap.
+    *   Documented best practices for chunking.
 
-### v1.2 (Testing & Benchmarking) - 2025-03-07
+*   **v1.2 (Testing & Benchmarking) - 2024-03-07**
+    *   Added timing code.
+    *   Tracked query latency and resource usage.
 
--   Added timing code to measure index building and query latency.
--   Observed CPU and memory usage on the Raspberry Pi 5.
+*   **v2.0 (OCR, Refactoring, and Robustness) - 2024-02-13**
+    *   **Added OCR support using `pytesseract` and `pdf2image`.** This allows the pipeline to handle scanned PDFs.
+    *   **Refactored code into `utils.py`:** Improved modularity and maintainability.
+    *   **Implemented a `config.yaml` file:** Centralized configuration parameters.
+    *   **Added comprehensive error handling and logging:** Made the system more robust and easier to debug.
+    *   **Implemented batch embedding:** Significantly sped up index creation.
+    *   **Added a persistent chunk store (`chunk_store.json`):** Allows retrieval of original text chunks.
+    *   **Improved command-line argument parsing:** Made scripts more flexible and user-friendly.
+    *   **Added support for basic keyword filtering.**
+    *   **Added basic multi-turn chat support.**
 
-### **v1.3 (Refactoring & version2 Folder) - 2025-02-13**
-- **Refactored code** into a dedicated `utils.py` and simpler main scripts
-- Created a new **`version2/`** folder where `download_docs.py`, `build_faiss_index.py`, `query_rag.py`, and `utils.py` now reside
-- Improved **error handling** with `try-except` blocks, detailed **logging** to `rag_pipeline.log` 
-- Added a preliminary **config.yaml** for easier customization (chunk size, model paths, etc.)
-
-Future versions will expand on multi-turn chat, advanced chunking, or partial offload to Hailo-8L. See [Section 8](#retrospective) for next-step ideas.
-
+**Current Working Version: [v2.0 (located in the `version2` directory)](version2/)**
 
 ---
 
-## 3. Raspberry Pi 5 Photo & Pipeline Diagram
 <a name="rpi-diagram"></a>
 ### 3.1 Pi 5 with AI Hat (beneath)
 
