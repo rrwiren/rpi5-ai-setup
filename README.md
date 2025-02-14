@@ -96,20 +96,20 @@ The workflow for the current version (v2.0, in the `version2` directory) is as f
 1.  **Download (`download_docs.py`):**
     *   Authenticates with Google Drive using a service account (credentials stored separately and *not* committed to the repository).
     *   Fetches PDF and TXT files from a specified Google Drive folder (or specific file IDs, if provided via command-line arguments).
-    *   Saves downloaded files to the `downloaded_files/` directory.
+    *   Saves the downloaded files to the `downloaded_files/` directory.
 
 2.  **Index (`build_faiss_index.py`):**
-    *   Loads documents from `downloaded_files/`.
+    *   Loads documents from the `downloaded_files/` directory.
     *   **Parses Documents:**
-        *   For PDFs, it uses **OCR** (`pytesseract` and `pdf2image`, with `poppler-utils` as a dependency) to extract text. This correctly handles *scanned* PDFs, which was a major issue in earlier versions.  It first attempts to use `PyPDF2` for efficiency with text-based PDFs, but falls back to OCR if needed.
+        *   For PDFs, it uses OCR (`pytesseract` and `pdf2image`) to extract text. This correctly handles *scanned* PDFs.
         *   For TXT files, it reads the text content directly.
-        *   Performs basic text preprocessing (removes extra whitespace, normalizes characters).
-    *   **Chunks Text:** Splits the extracted text into smaller pieces. Supports:
-        *   **Character-based chunking:**  Splits into chunks of a specified size (e.g., 500 characters) with a specified overlap (e.g., 50 characters).
+        *   Performs basic text preprocessing (removes extra whitespace, etc.).
+    *   **Chunks Text:** Splits the extracted text into smaller pieces.  Supports:
+        *   **Character-based chunking:** Splits into chunks of a specified size (e.g., 500 characters) with a specified overlap (e.g., 50 characters).
         *   **Paragraph-based chunking:** Splits text based on paragraph boundaries.
     *   **Creates Embeddings:** Uses the specified Sentence Transformer model (default: `all-MiniLM-L6-v2`) to create embeddings for each chunk.  This is done in *batches* for efficiency.
     *   **Builds/Updates FAISS Index:** Creates a new FAISS index or appends to an existing one, storing the embeddings.  Saves the index to `faiss_index/index.faiss`.
-    *   **Saves Chunk Data:** Saves the *original text* of each chunk, along with the *filepath* of the source document, to a JSON file (`chunk_store.json`).  This is *critical* for retrieving the context for answer generation.
+    *   **Saves Chunk Data:** Saves the *original text* of each chunk, along with the *filepath* of the source document, to a JSON file (`chunk_store.json`). This is *critical* for retrieving the context for answer generation.
 
 3.  **Query (`query_rag.py`):**
     *   Loads the FAISS index (`faiss_index/index.faiss`) and the chunk store (`chunk_store.json`).
@@ -119,7 +119,7 @@ The workflow for the current version (v2.0, in the `version2` directory) is as f
     *   **Retrieves Chunk Text:** Uses the indices from FAISS to retrieve the *original text* of the relevant chunks from `chunk_store.json`.
     *   **Generates Answer:** Constructs a prompt for Mistral 7B, including the retrieved context (chunks) and the user's query. Calls Mistral 7B to generate the final answer.
     *   **Interactive/Direct Mode:** Supports both interactive querying (via a prompt) and direct queries via command-line arguments (`--query`).
-    *   **(Basic) Multi-turn Chat:** Can optionally retain a limited history of previous questions and answers to provide context for follow-up questions (`--context-turns`)
+    *   **(Basic) Multi-turn Chat:** Can optionally retain a limited history of previous questions and answers to provide context for follow-up questions (`--context-turns`).
 
 ---
 
