@@ -47,20 +47,29 @@ The pipeline chunks documents, creates embeddings, stores them in FAISS, and the
 
 ## 2. Changelog & Versions
 <a name="changelog--versions"></a>
-### v1.0 (Initial Hybrid RAG) - 2024-02-29
+### v1.0 (Initial Hybrid RAG) - 2025-02-29
 
 -   Implemented the hybrid approach using Sentence Transformers for embeddings and Mistral 7B for generation.
 -   Created `build_faiss_index.py` and `query_rag.py`.
 
-### v1.1 (Chunking & Tuning) - 2024-03-03
+### v1.1 (Chunking & Tuning) - 2025-03-03
 
 -   Experimented with different chunk sizes (300-800 characters) and overlap (~50%).
 -   Documented best practices for chunking.
 
-### v1.2 (Testing & Benchmarking) - 2024-03-07
+### v1.2 (Testing & Benchmarking) - 2025-03-07
 
 -   Added timing code to measure index building and query latency.
 -   Observed CPU and memory usage on the Raspberry Pi 5.
+
+### **v1.3 (Refactoring & version2 Folder) - 2025-02-13**
+- **Refactored code** into a dedicated `utils.py` and simpler main scripts
+- Created a new **`version2/`** folder where `download_docs.py`, `build_faiss_index.py`, `query_rag.py`, and `utils.py` now reside
+- Improved **error handling** with `try-except` blocks, detailed **logging** to `rag_pipeline.log` 
+- Added a preliminary **config.yaml** for easier customization (chunk size, model paths, etc.)
+
+Future versions will expand on multi-turn chat, advanced chunking, or partial offload to Hailo-8L. See [Section 8](#retrospective) for next-step ideas.
+
 
 ---
 
@@ -76,19 +85,38 @@ The pipeline chunks documents, creates embeddings, stores them in FAISS, and the
 
 ---
 
-## 4. Hybrid RAG Workflow
 <a name="rag-workflow"></a>
-1.  **Download:** The `download_docs.py` script retrieves documents (PDFs and TXT files) from a specified Google Drive folder using a service account.  Downloaded files are stored in the `downloaded_files/` directory.
-2.  **Index:** The `build_faiss_index.py` script performs the following:
-    *   Parses the downloaded documents.
-    *   Chunks the text content into smaller pieces.
-    *   Creates embeddings for each chunk using Sentence Transformers.
-    *   Stores the embeddings and chunk IDs in a FAISS index (saved to the `faiss_index/` directory).
-3.  **Query:** The `query_rag.py` script handles user queries:
-    *   Embeds the user's question using Sentence Transformers.
-    *   Searches the FAISS index for the most similar document chunks.
-    *   Constructs a prompt for Mistral 7B, including the retrieved chunks and the original question.
-    *   Generates the final answer using Mistral 7B.
+## 4. Hybrid RAG Workflow (Version 2)
+
+The workflow for the current version (v2.0, in the `version2` directory) is as follows:
+
+1.  **Download (`download_docs.py`):**
+    *   Authenticates with Google Drive using a service account (credentials stored separately and *not* committed to the repository).
+    *   Fetches PDF and TXT files from a specified Google Drive folder (or specific file IDs, if provided via command-line arguments).
+    *   Saves downloaded files to the `downloaded_files/` directory.
+
+2.  **Index (`build_faiss_index.py`):**
+    *   Loads documents from `downloaded_files/`.
+    *   **Parses Documents:**
+        *   For PDFs, it uses **OCR** (`pytesseract` and `pdf2image`, with `poppler-utils` as a dependency) to extract text. This correctly handles *scanned* PDFs, which was a major issue in earlier versions.  It first attempts to use `PyPDF2` for efficiency with text-based PDFs, but falls back to OCR if needed.
+        *   For TXT files, it reads the text content directly.
+        *   Performs basic text preprocessing (removes extra whitespace, normalizes characters).
+    *   **Chunks Text:** Splits the extracted text into smaller pieces. Supports:
+        *   **Character-based chunking:**  Splits into chunks of a specified size (e.g., 500 characters) with a specified overlap (e.g., 50 characters).
+        *   **Paragraph-based chunking:** Splits text based on paragraph boundaries.
+    *   **Creates Embeddings:** Uses the specified Sentence Transformer model (default: `all-MiniLM-L6-v2`) to create embeddings for each chunk.  This is done in *batches* for efficiency.
+    *   **Builds/Updates FAISS Index:** Creates a new FAISS index or appends to an existing one, storing the embeddings.  Saves the index to `faiss_index/index.faiss`.
+    *   **Saves Chunk Data:** Saves the *original text* of each chunk, along with the *filepath* of the source document, to a JSON file (`chunk_store.json`).  This is *critical* for retrieving the context for answer generation.
+
+3.  **Query (`query_rag.py`):**
+    *   Loads the FAISS index (`faiss_index/index.faiss`) and the chunk store (`chunk_store.json`).
+    *   Embeds the user's query using the same Sentence Transformer model.
+    *   **Searches FAISS:** Finds the top-k most similar chunk embeddings.
+    *   **(Optional) Keyword Filtering:** If keywords are provided (via `--keywords`), filters the retrieved chunks to include only those containing *all* specified keywords (AND logic).
+    *   **Retrieves Chunk Text:** Uses the indices from FAISS to retrieve the *original text* of the relevant chunks from `chunk_store.json`.
+    *   **Generates Answer:** Constructs a prompt for Mistral 7B, including the retrieved context (chunks) and the user's query. Calls Mistral 7B to generate the final answer.
+    *   **Interactive/Direct Mode:** Supports both interactive querying (via a prompt) and direct queries via command-line arguments (`--query`).
+    *   **(Basic) Multi-turn Chat:** Can optionally retain a limited history of previous questions and answers to provide context for follow-up questions (`--context-turns`)
 
 ---
 
